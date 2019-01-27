@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'OPMdb',
         'USER': 'root',
-        'PASSWORD': '888888',
+        'PASSWORD': 'wyd980420',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
