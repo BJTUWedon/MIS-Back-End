@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'OPMdb',
         'USER': 'root',
         'PASSWORD': '888888',
-        'HOST': '104.168.134.52',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
