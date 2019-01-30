@@ -174,16 +174,7 @@ CORS_ALLOW_HEADERS = default_headers + (
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    'ooer.space:8001',
-    'http://ooer.space:8001/#/entry',
-    '127.0.0.1:8000',
-    '127.0.0.1:9999',
-    'localhost:8000',
-    'localhost:9999',
     'http://lvmaozi.info',
-    '104.168.134.52',
-    'http://lvmaozi.info:80',
-    '104.168.134.52:80',
 )
 
 
