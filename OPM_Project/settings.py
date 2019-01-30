@@ -181,6 +181,9 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
     'localhost:9999',
     'http://lvmaozi.info',
+    '104.168.134.52',
+    'http://lvmaozi.info:80',
+    '104.168.134.52:80',
 )
 
 
