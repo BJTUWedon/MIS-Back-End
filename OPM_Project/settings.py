@@ -180,6 +180,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:9999',
     'localhost:8000',
     'localhost:9999',
+    'http://lvmaozi.info',
 )
 
 

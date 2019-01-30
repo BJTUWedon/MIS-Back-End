@@ -506,7 +506,7 @@ def uploadFile(request):
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://127.0.0.1:9999/"+src)#我认为下面还要返回id
+                File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://0.0.0.0:9999/"+src)#我认为下面还要返回id
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
@@ -516,7 +516,7 @@ def uploadFile(request):
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://127.0.0.1:9999/"+src)
+                File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://0.0.0.0:9999/"+src)
                 Data = {"title": title, "id": id}
         except Exception as e:
             success = False
