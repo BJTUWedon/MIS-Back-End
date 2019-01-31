@@ -51,11 +51,12 @@ def login(request):
                     else:
                         success = False
                         Data = "密码不正确！"
-                        token = 'mima'
+                        return JsonResponse({"success": success, "data": Data})
                 except Exception as e:
                     success = False
                     Data = str(e)
                     token = '1'
+                    return JsonResponse({"success": success, "data": Data})
                 # except:
                 #     success = False
                 #     Data = "用户名不存在！"
@@ -63,6 +64,7 @@ def login(request):
             success = False
             Data = str(e)
             token = '2'
+            return JsonResponse({"success": success, "data": Data})
         print(success)
         print(token)
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
