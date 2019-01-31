@@ -60,6 +60,7 @@ def login(request):
         except Exception as e:
             success = False
             Data = str(e)
+            token = 1
         print(success)
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
         resp.set_cookie('token', token, expires=expires*60*60*24)
