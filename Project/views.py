@@ -51,17 +51,20 @@ def login(request):
                     else:
                         success = False
                         Data = "密码不正确！"
+                        token = 'mima'
                 except Exception as e:
                     success = False
                     Data = str(e)
+                    token = '1'
                 # except:
                 #     success = False
                 #     Data = "用户名不存在！"
         except Exception as e:
             success = False
             Data = str(e)
-            token = 1
+            token = '2'
         print(success)
+        print(token)
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
         resp.set_cookie('token', token, expires=expires*60*60*24)
         resp.set_cookie('isManager', user.isManager, expires=expires*60*60*24)
