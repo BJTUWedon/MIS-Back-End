@@ -39,6 +39,7 @@ def login(request):
                         if expires == 0:
                             return JsonResponse({"success":False,"data":"You don`t have permission"}, safe=False)
                         token = hashlib.sha1(os.urandom(24)).hexdigest()
+                        print(token)
                         Token.objects.create(username_id=id,Token=token,createDate=timezone.now(),expires=expires)
                         global globalUserId
                         globalUserId = id
