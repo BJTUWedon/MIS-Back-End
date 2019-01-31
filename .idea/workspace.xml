@@ -94,12 +94,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="90" />
+          <entry key="py" value="101" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="90" />
+          <entry key="Python" value="101" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -116,11 +116,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="177" column="5" selection-start-line="177" selection-start-column="5" selection-end-line="177" selection-end-column="5" />
+            <state relative-caret-position="112">
+              <caret line="175" column="25" lean-forward="true" selection-start-line="175" selection-start-column="25" selection-end-line="175" selection-end-column="25" />
               <folding>
                 <element signature="e#315#324#0" expanded="true" />
               </folding>
@@ -128,11 +128,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
-              <caret line="518" column="148" selection-start-line="518" selection-start-column="148" selection-end-line="518" selection-end-column="148" />
+            <state relative-caret-position="91">
+              <caret line="40" column="29" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="29" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -216,9 +216,9 @@
       <path value="$PROJECT_DIR$/File-Mis-master/File-Mis-master/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="172" />
-    <option name="y" value="97" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-27" />
+    <option name="y" value="280" />
     <option name="width" value="1040" />
     <option name="height" value="744" />
   </component>
@@ -367,12 +367,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="652" y="40" width="1040" height="744" extended-state="0" />
+    <frame x="1030" y="102" width="1040" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.22142857" />
+      <window_info active="true" content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.22142857" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49626866" weight="0.329718" />
@@ -384,7 +384,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5245203" side_tool="true" weight="0.35791758" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.36945814" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.36945814" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -577,22 +577,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Project/views.py">
+    <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="518" column="148" selection-start-line="518" selection-start-column="148" selection-end-line="518" selection-end-column="148" />
+        <state relative-caret-position="112">
+          <caret line="175" column="25" lean-forward="true" selection-start-line="175" selection-start-column="25" selection-end-line="175" selection-end-column="25" />
           <folding>
-            <element signature="e#18#49#0" expanded="true" />
+            <element signature="e#315#324#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
+    <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="177" column="5" selection-start-line="177" selection-start-column="5" selection-end-line="177" selection-end-column="5" />
+        <state relative-caret-position="91">
+          <caret line="40" column="29" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="29" />
           <folding>
-            <element signature="e#315#324#0" expanded="true" />
+            <element signature="e#18#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
