@@ -175,8 +175,10 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'lvmaozi.info',
+    'lvmaozi.info:81',
     '104.168.134.52',
     '104.168.134.52:80',
+    '104.168.134.52:81',
     '104.168.134.52:8000',
     '104.168.134.52:8001',
 )
