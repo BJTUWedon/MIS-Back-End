@@ -216,9 +216,9 @@
       <path value="$PROJECT_DIR$/File-Mis-master/File-Mis-master/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="652" />
-    <option name="y" value="40" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="172" />
+    <option name="y" value="97" />
     <option name="width" value="1040" />
     <option name="height" value="744" />
   </component>
