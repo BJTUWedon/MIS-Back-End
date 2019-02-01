@@ -621,11 +621,11 @@ def getFile(request):
             tokenInfo = Token.objects.get(Token=token)
             userid = tokenInfo.username_id
             try:
-                FileList = File_User.objects.get(filename_id=id)
+                FileList = File_User.objects.get(username_id=userid, filename_id=id)
             except:
                 return JsonResponse({"success": False, "data": "You can`t open this file"})
             try:
-                thisUserFile = File_User.objects.filter(filename_id=id,username_id=userid)
+                thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                 limit = thisUserFile.time
                 if isinstance(FileList, Iterable) == True:
                     for authlist in FileList:
