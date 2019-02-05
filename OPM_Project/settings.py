@@ -165,7 +165,7 @@ STATICFILES_FINDERS = (
 )
 
 CRONJOBS = [
-    ('55 * * * *', 'Project.token.task')
+    ('03 * * * *', 'Project.token.task')
 ]
 CORS_ALLOW_HEADERS = default_headers + (
     '*',
