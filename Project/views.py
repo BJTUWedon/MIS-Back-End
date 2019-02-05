@@ -671,7 +671,19 @@ def deleteFile(request):
             Data = str(e)
         return JsonResponse({"success": success, "data": Data})
 
-
+def logout(request):
+    if request.method =="POST":
+        Data=[]
+        try:
+            success = True
+            resp = JsonResponse({"success": success, "data": Data}, safe=False)
+            resp.delete_cookie('token')
+            resp.delete_cookie('isManager')
+            return resp
+        except Exception as e:
+            success = False
+            Data = str(e)
+            return JsonResponse({"success": success, "data": Data})
 
 
 

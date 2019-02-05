@@ -97,12 +97,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="276" />
+          <entry key="py" value="332" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="276" />
+          <entry key="Python" value="332" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -143,10 +143,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="643" column="68" lean-forward="true" selection-start-line="643" selection-start-column="68" selection-end-line="643" selection-end-column="68" />
+            <state relative-caret-position="349">
+              <caret line="680" column="17" selection-start-line="680" selection-start-column="17" selection-end-line="680" selection-end-column="17" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
+                <marker date="1549378462532" expanded="true" signature="27824:28416" ph="..." />
               </folding>
             </state>
           </provider>
@@ -233,7 +234,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1040" />
@@ -389,7 +390,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -618,10 +619,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="643" column="68" lean-forward="true" selection-start-line="643" selection-start-column="68" selection-end-line="643" selection-end-column="68" />
+        <state relative-caret-position="349">
+          <caret line="680" column="17" selection-start-line="680" selection-start-column="17" selection-end-line="680" selection-end-column="17" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
+            <marker date="1549378462532" expanded="true" signature="27824:28416" ph="..." />
           </folding>
         </state>
       </provider>
