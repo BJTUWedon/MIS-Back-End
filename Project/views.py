@@ -637,11 +637,11 @@ def getFile(request):
                     username_id = FileList.username_id
                     time = FileList.time
                     authUserList = [{"id": username_id, "limit": time}]
-                Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
+                Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":'0.99'}
             except:
                 time = FileList.time
                 Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                        "authUserList": authUserList,"limit":time}
+                        "authUserList": authUserList,"limit":'0.99'}
         except Exception as e:
             success = False
             Data = str(e)

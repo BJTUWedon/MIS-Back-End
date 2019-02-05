@@ -87,32 +87,32 @@
         <counts>
           <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="262" />
+          <entry key="py" value="276" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="262" />
+          <entry key="Python" value="276" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="3" />
+          <entry key="py" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="3" />
+          <entry key="Python" value="4" />
         </counts>
       </usages-collector>
     </session>
@@ -143,11 +143,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+            <state relative-caret-position="461">
+              <caret line="643" column="68" lean-forward="true" selection-start-line="643" selection-start-column="68" selection-end-line="643" selection-end-column="68" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Project/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="694">
+              <caret line="45" column="47" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -163,8 +172,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>GETFILE</find>
-      <find>POST</find>
       <find>POSTFILE</find>
       <find>getfile</find>
       <find>LIST</find>
@@ -182,7 +189,6 @@
       <find>getFileList</find>
       <find>Headers</find>
       <find>update</find>
-      <find>getFile</find>
       <find>upload</find>
       <find>TemporaryFile</find>
       <find>close_called</find>
@@ -193,6 +199,9 @@
       <find>setting</find>
       <find>token</find>
       <find>login</find>
+      <find>getFile</find>
+      <find>getFIle</find>
+      <find>postFile</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -213,8 +222,8 @@
         <option value="$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/django/core/files/uploadedfile.py" />
         <option value="$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/django/core/files/temp.py" />
         <option value="$PROJECT_DIR$/manage.py" />
-        <option value="$PROJECT_DIR$/Project/views.py" />
         <option value="$PROJECT_DIR$/OPM_Project/settings.py" />
+        <option value="$PROJECT_DIR$/Project/views.py" />
       </list>
     </option>
   </component>
@@ -236,6 +245,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
+              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
+              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
+              <item name="OPM_Project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
+              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
+              <item name="Project" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -257,27 +287,6 @@
               <item name="OPM_Project" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Project" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
-              <item name="OPM_Project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="File-sys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="File-sys" type="462c0819:PsiDirectoryNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -385,7 +394,7 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.06289978" />
+      <window_info active="true" content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.10021322" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49626866" weight="0.329718" />
@@ -397,7 +406,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5245203" side_tool="true" weight="0.35791758" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.16178067" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.16178067" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -476,13 +485,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Project/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="45" column="47" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/django/contrib/staticfiles/finders.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -590,6 +592,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Project/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="694">
+          <caret line="45" column="47" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
@@ -609,8 +618,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+        <state relative-caret-position="461">
+          <caret line="643" column="68" lean-forward="true" selection-start-line="643" selection-start-column="68" selection-end-line="643" selection-end-column="68" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>
