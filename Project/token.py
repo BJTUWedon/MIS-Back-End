@@ -15,4 +15,4 @@ def task():
    #              Token.objects.filter(Token=token.Token).delete()
    #         else:
    #             pass
-    return HttpResponse()
+    print(1111111)

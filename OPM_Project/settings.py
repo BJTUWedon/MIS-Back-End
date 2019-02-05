@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Project.apps.ProjectConfig',
     'corsheaders',
-    'django_crontab',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -165,7 +166,7 @@ STATICFILES_FINDERS = (
 )
 
 CRONJOBS = [
-    ('03 * * * *', 'Project.token.task')
+    ('20 * * * *', 'Project.token.task')
 ]
 CORS_ALLOW_HEADERS = default_headers + (
     '*',
