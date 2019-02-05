@@ -508,8 +508,9 @@ def uploadFile(request):
             # name = os.path.splitext(file_obj)[0]
             # address = os.path.splitext(file_obj)[-1]
             src = file_obj.name #到时候修改成服务器的地址
+            path1 = os.path.abspath('.')
             if id == "-1":
-                with open('/Files/'+src, 'wb')as f:
+                with open(path1+src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
                 File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/Files/"+src)#我认为下面还要返回id
@@ -519,7 +520,7 @@ def uploadFile(request):
                 print(id)
                 Data = {"title": title, "id": id}
             else:
-                with open('/Files/' + src, 'wb')as f:
+                with open(path1+src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
                 File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/Files/"+src)
