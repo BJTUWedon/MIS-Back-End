@@ -8,11 +8,10 @@ import json
 from collections import Iterable
 
 def task():
-   # tokenInfo = Token.objects.all()
-   # if tokenInfo:
-   #     for token in tokenInfo:
-   #         if token.createDate>=-datetime.datetime.now()-datetime.timedelta(days=1): #一天失效
-   #              Token.objects.filter(Token=token.Token).delete()
-   #         else:
-   #             pass
-   print(12313)
+   tokenInfo = Token.objects.all()
+   if tokenInfo:
+       for token in tokenInfo:
+           if token.createDate>=-datetime.datetime.now()-datetime.timedelta(days=1): #一天失效
+                Token.objects.filter(Token=token.Token).delete()
+           else:
+               pass
