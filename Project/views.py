@@ -50,7 +50,7 @@ def login(request):
                         # return HttpResponse(json.dumps({"msg": "ok!"}))
                     else:
                         success = False
-                        Data = "密码不正确！"
+                        Data = "Wrong Password！"
                         return JsonResponse({"success": success, "data": Data})
                 except Exception as e:
                     success = False
@@ -65,8 +65,6 @@ def login(request):
             Data = str(e)
             token = '2'
             return JsonResponse({"success": success, "data": Data})
-        print(success)
-        print(token)
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
         resp.set_cookie('token', token, expires=expires*60*60*24)
         resp.set_cookie('isManager', user.isManager, expires=expires*60*60*24)
@@ -511,20 +509,20 @@ def uploadFile(request):
             # address = os.path.splitext(file_obj)[-1]
             src = file_obj.name #到时候修改成服务器的地址
             if id == "-1":
-                with open(src, 'wb')as f:
+                with open('/Files/'+src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+src)#我认为下面还要返回id
+                File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/Files/"+src)#我认为下面还要返回id
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
                 Data = {"title": title, "id": id}
             else:
-                with open(src, 'wb')as f:
+                with open('/Files/' + src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
+                File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/Files/"+src)
                 Data = {"title": title, "id": id}
         except Exception as e:
             success = False
@@ -676,7 +674,7 @@ def logout(request):
         Data=[]
         try:
             success = True
-            resp = JsonResponse({"success": success, "data": Data}, safe=False)
+            resp = JsonResponse({"success": success, "ldata": Data}, safe=False)
             resp.delete_cookie('token')
             resp.delete_cookie('isManager')
             return resp
