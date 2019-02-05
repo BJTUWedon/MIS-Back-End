@@ -97,22 +97,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="332" />
+          <entry key="py" value="390" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="332" />
+          <entry key="Python" value="390" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="py" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="4" />
+          <entry key="Python" value="5" />
         </counts>
       </usages-collector>
     </session>
@@ -140,15 +140,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="680" column="17" selection-start-line="680" selection-start-column="17" selection-end-line="680" selection-end-column="17" />
+            <state relative-caret-position="229">
+              <caret line="673" column="20" lean-forward="true" selection-start-line="673" selection-start-column="20" selection-end-line="673" selection-end-column="20" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
-                <marker date="1549378462532" expanded="true" signature="27824:28416" ph="..." />
+                <marker date="1549378772329" expanded="true" signature="27824:28259" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/OPM_Project/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="49" column="36" lean-forward="true" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -199,10 +208,10 @@
       <find>DJANGO_SETTINGS_MODULE</find>
       <find>setting</find>
       <find>token</find>
-      <find>login</find>
       <find>getFile</find>
       <find>getFIle</find>
       <find>postFile</find>
+      <find>login</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -214,7 +223,6 @@
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/Project/csrf_disable.py" />
         <option value="$PROJECT_DIR$/Project/token.py" />
-        <option value="$PROJECT_DIR$/OPM_Project/urls.py" />
         <option value="$PROJECT_DIR$/Project/COR.py" />
         <option value="C:/Python27/Lib/SimpleHTTPServer.py" />
         <option value="$PROJECT_DIR$/Project/models.py" />
@@ -225,6 +233,7 @@
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/OPM_Project/settings.py" />
         <option value="$PROJECT_DIR$/Project/views.py" />
+        <option value="$PROJECT_DIR$/OPM_Project/urls.py" />
       </list>
     </option>
   </component>
@@ -234,7 +243,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1040" />
@@ -390,7 +399,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -508,13 +517,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OPM_Project/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Project/COR.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -619,12 +621,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="680" column="17" selection-start-line="680" selection-start-column="17" selection-end-line="680" selection-end-column="17" />
+        <state relative-caret-position="229">
+          <caret line="673" column="20" lean-forward="true" selection-start-line="673" selection-start-column="20" selection-end-line="673" selection-end-column="20" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
-            <marker date="1549378462532" expanded="true" signature="27824:28416" ph="..." />
+            <marker date="1549378772329" expanded="true" signature="27824:28259" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OPM_Project/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="49" column="36" lean-forward="true" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
         </state>
       </provider>
     </entry>

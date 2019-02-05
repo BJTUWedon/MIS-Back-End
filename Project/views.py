@@ -672,7 +672,7 @@ def deleteFile(request):
         return JsonResponse({"success": success, "data": Data})
 
 def logout(request):
-    if request.method =="POST":
+    if request.method =="GET":
         Data=[]
         try:
             success = True
