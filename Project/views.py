@@ -581,19 +581,23 @@ def getUser(request):
             authFileList = []
             try:
                 FileList = File_User.objects.get(username_id=id)
+                print(1)
                 if isinstance(FileList, Iterable) == True:
                     for authlist in FileList:
                         filename_id = authlist.filename_id
                         time = authlist.time
                         jsonArray = {"id":filename_id, "time":time}
                         authFileList.append(jsonArray)
+                        print(3)
                 else:
                     filename_id = FileList.filename_id
                     time = FileList.time
                     authFileList = {"id": filename_id, "time": time}
                     Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
+                    print(4)
             except:
                 Data = {"username": username, "email": email, "createDate": createDate, "limit": userInfo.authTime,"authFileList": authFileList}
+                print(2)
         except Exception as e:
             success = False
             Data = str(e)
