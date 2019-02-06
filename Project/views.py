@@ -311,7 +311,7 @@ def delectfile(request):
         filename = request.GET.get('filename')
         file = File.objects.get(filename=filename)
         if file:
-            os.remove(filename)
+            os.remove(file.src)
             File.objects.filter(filename = filename).delete()
             return JsonResponse({"status": 1})
 
@@ -456,7 +456,7 @@ def postFile(request):
             try:
                 type = json.loads(request.body)['file']
             except:
-                pass
+                type = json.loads(request.body)['type']
             title = json.loads(request.body)['title']
             content = json.loads(request.body)['content']
             authUserList = json.loads(request.body)['authUserList']#API需要新增time
