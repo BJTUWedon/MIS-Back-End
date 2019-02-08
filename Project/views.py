@@ -676,7 +676,7 @@ def logout(request):
         Data=[]
         try:
             success = True
-            resp = JsonResponse({"success": success, "ldata": Data}, safe=False)
+            resp = JsonResponse({"success": success, "data": Data}, safe=False)
             resp.delete_cookie('token')
             resp.delete_cookie('isManager')
             return resp
