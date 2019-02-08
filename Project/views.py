@@ -414,7 +414,7 @@ def getUserList(request):
 
 def getFileList(request):
     if request.method == "GET":
-        Files = File.objects.all()
+        Files = File.objects.all().order_by('-id')
         Data = []
         try:
             success = True
