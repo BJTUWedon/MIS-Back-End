@@ -628,7 +628,7 @@ def getFile(request):
             try:
                 thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                 limit = thisUserFile.time
-                Fileinfo = File_User.objects.get(filename_id=id)
+                Fileinfo = File_User.objects.filter(filename_id=id)
                 if isinstance(Fileinfo, Iterable) == True:
                     for authlist in Fileinfo:
                         username_id = authlist.username_id
@@ -643,12 +643,12 @@ def getFile(request):
                     authUserList = [{"id": username_id, "limit": time}]
                 Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
             except Exception as e:
-                print(3)
-                success = False
-                Data = str(e)
-                # time = FileList.time
-                # Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                #         "authUserList": authUserList,"limit":time}
+                # print(3)
+                # success = False
+                # Data = str(e)
+                time = FileList.time
+                Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
+                        "authUserList": authUserList,"limit":time}
         except Exception as e:
             success = False
             Data = str(e)
