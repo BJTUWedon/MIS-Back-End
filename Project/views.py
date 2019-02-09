@@ -613,7 +613,7 @@ def getFile(request):
             id = json.loads(request.body)['fileId']
             fileInfo = File.objects.get(id=id)
             title = fileInfo.filename
-            content = fileInfo.contentge
+            content = fileInfo.content
             createDate = fileInfo.createDate
             type = fileInfo.type
             print(type)
