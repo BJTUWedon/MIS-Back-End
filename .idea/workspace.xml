@@ -159,8 +159,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="593" column="83" selection-start-line="593" selection-start-column="83" selection-end-line="593" selection-end-column="84" />
+            <state relative-caret-position="394">
+              <caret line="561" column="45" selection-start-line="561" selection-start-column="45" selection-end-line="561" selection-end-column="45" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -644,8 +644,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="593" column="83" selection-start-line="593" selection-start-column="83" selection-end-line="593" selection-end-column="84" />
+        <state relative-caret-position="394">
+          <caret line="561" column="45" selection-start-line="561" selection-start-column="45" selection-end-line="561" selection-end-column="45" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>

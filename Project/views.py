@@ -559,7 +559,7 @@ def postUser(request):
                 else:
                     User.objects.filter(id=id).update(username=username, email=email)
                     # ,authtime=authtime
-                File_User.objects.filter(id=id).delete()
+                File_User.objects.filter(username_id=id).delete()
                 if isinstance(authFileList, Iterable) == True:
                     for authlist in authFileList:
                         File_User.objects.create(username_id=id, filename_id=authlist['id'], time=authlist['limit'])
