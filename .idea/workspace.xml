@@ -100,12 +100,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="638" />
+          <entry key="py" value="671" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="638" />
+          <entry key="Python" value="671" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -159,8 +159,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
-              <caret line="488" column="53" selection-start-line="488" selection-start-column="53" selection-end-line="488" selection-end-column="53" />
+            <state relative-caret-position="304">
+              <caret line="643" column="27" lean-forward="true" selection-start-line="643" selection-start-column="27" selection-end-line="643" selection-end-column="27" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -259,9 +259,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-39" />
-    <option name="y" value="115" />
-    <option name="width" value="1258" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1040" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectView">
@@ -419,7 +419,7 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.16791044" />
+      <window_info content_ui="combo" x="35" y="502" width="1876" height="176" id="Project" order="2" visible="true" weight="0.16791044" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49626866" weight="0.329718" />
@@ -431,7 +431,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5245203" side_tool="true" weight="0.35791758" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.10640608" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.28230184" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -644,8 +644,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="488" column="53" selection-start-line="488" selection-start-column="53" selection-end-line="488" selection-end-column="53" />
+        <state relative-caret-position="304">
+          <caret line="643" column="27" lean-forward="true" selection-start-line="643" selection-start-column="27" selection-end-line="643" selection-end-column="27" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>

@@ -628,15 +628,16 @@ def getFile(request):
             try:
                 thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                 limit = thisUserFile.time
-                if isinstance(FileList, Iterable) == True:
-                    for authlist in FileList:
+                Fileinfo = File_User.objects.get(filename_id=id)
+                if isinstance(Fileinfo, Iterable) == True:
+                    for authlist in Fileinfo:
                         username_id = authlist.username_id
                         time = authlist.time
                         jsonArray = {"id":username_id, "limit":time}
                         authUserList.append(jsonArray)
                 else:
-                    username_id = FileList.username_id
-                    time = FileList.time
+                    username_id = Fileinfo.username_id
+                    time = Fileinfo.time
                     authUserList = [{"id": username_id, "limit": time}]
                 Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
             except:
