@@ -642,11 +642,13 @@ def getFile(request):
                     time = Fileinfo.time
                     authUserList = [{"id": username_id, "limit": time}]
                 Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
-            except:
+            except Exception as e:
                 print(3)
-                time = FileList.time
-                Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                        "authUserList": authUserList,"limit":time}
+                success = False
+                Data = str(e)
+                # time = FileList.time
+                # Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
+                #         "authUserList": authUserList,"limit":time}
         except Exception as e:
             success = False
             Data = str(e)
