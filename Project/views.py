@@ -572,7 +572,6 @@ def postUser(request):
 
 def getUser(request):
     if request.method =="POST":
-        Data= []
         try:
             success = True
             id = json.loads(request.body)['userId']
@@ -599,13 +598,15 @@ def getUser(request):
                     authFileList = {"id": filename_id, "time": time}
                     Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
                     print(4)
+                return JsonResponse({"success": success, "data": Data})
             except:
                 Data = {"username": username, "email": email, "createDate": createDate, "limit": userInfo.authTime,"authFileList": authFileList}
                 print(2)
+                return JsonResponse({"success": success, "data": Data})
         except Exception as e:
             success = False
             Data = str(e)
-        return JsonResponse({"success": success, "data": Data})
+            return JsonResponse({"success": success, "data": Data})
 
 def getFile(request):
     if request.method =="POST":
