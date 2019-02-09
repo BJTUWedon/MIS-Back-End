@@ -418,7 +418,7 @@ def getFileList(request):
         Data = []
         try:
             success = True
-            if Files:  # 数据库有数据
+            if Files:  # 数据po库有数据
                 if isinstance(Files, Iterable) == True:
                     for file in Files:
                         id = file.id
@@ -483,9 +483,11 @@ def postFile(request):
                     for authlist in authUserList:
                         File_User.objects.create(filename_id=id, username_id=authlist['id'], time=authlist['limit'])
                     Data = {"title": title, "id": id}
+                    print(1)
                 else:
                     File_User.objects.create(filename_id=id, username_id=authUserList['id'], time=authUserList['limit'])
                     Data = {"title": title, "id": id}
+                    print(2)
         except Exception as e:
             success = False
             Data = str(e)
