@@ -635,12 +635,15 @@ def getFile(request):
                         time = authlist.time
                         jsonArray = {"id":username_id, "limit":time}
                         authUserList.append(jsonArray)
+                        print(1)
                 else:
+                    print(2)
                     username_id = Fileinfo.username_id
                     time = Fileinfo.time
                     authUserList = [{"id": username_id, "limit": time}]
                 Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
             except:
+                print(3)
                 time = FileList.time
                 Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
                         "authUserList": authUserList,"limit":time}
