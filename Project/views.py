@@ -587,7 +587,7 @@ def getUser(request):
                     for authlist in FileList:
                         filename_id = authlist.filename_id
                         time = authlist.time
-                        jsonArray = {"id":filename_id, "time":time}
+                        jsonArray = {"id":filename_id, "limit":time}
                         authFileList.append(jsonArray)
                         print(3)
                         Data = {"username": username, "email": email, "createDate": createDate,
