@@ -590,6 +590,8 @@ def getUser(request):
                         jsonArray = {"id":filename_id, "time":time}
                         authFileList.append(jsonArray)
                         print(3)
+                        Data = {"username": username, "email": email, "createDate": createDate,
+                                "authTime": userInfo.authTime, "authFileList": authFileList}
                 else:
                     filename_id = FileList.filename_id
                     time = FileList.time
