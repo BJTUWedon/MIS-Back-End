@@ -595,7 +595,7 @@ def getUser(request):
                 else:
                     filename_id = FileList.filename_id
                     time = FileList.time
-                    authFileList = {"id": filename_id, "time": time}
+                    authFileList = {"id": filename_id, "limit": time}
                     Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
                     print(4)
                 return JsonResponse({"success": success, "data": Data})
