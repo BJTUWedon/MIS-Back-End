@@ -482,12 +482,11 @@ def postFile(request):
                 if isinstance(authUserList, Iterable) == True:
                     for authlist in authUserList:
                         File_User.objects.create(filename_id=id, username_id=authlist['id'], time=authlist['limit'])
+                        print(1)
                     Data = {"title": title, "id": id}
-                    print(1)
                 else:
                     File_User.objects.create(filename_id=id, username_id=authUserList['id'], time=authUserList['limit'])
                     Data = {"title": title, "id": id}
-                    print(2)
         except Exception as e:
             success = False
             Data = str(e)
