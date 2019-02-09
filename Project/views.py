@@ -309,10 +309,11 @@ def addfile(request):
 def delectfile(request):
     if request.method == "GET":
         filename = request.GET.get('filename')
-        file = File.objects.get(filename=filename)
+        file = File.objects.filter(filename=filename)
         if file:
+            print(file['src'])
             os.remove(file.src)
-            File.objects.filter(filename = filename).delete()
+            File.objects.filter(filename=filename).delete()
             return JsonResponse({"status": 1})
 
 def searchfile(request):
@@ -504,9 +505,9 @@ def uploadFile(request):
             content = request.POST.get('content','')
             type = request.POST.get('type','')
             file_obj = request.FILES['file']
-            # name = os.path.splitext(file_obj)[0]
-            # address = os.path.splitext(file_obj)[-1]
-            src = file_obj.name #到时候修改成服务器的地址
+            name = os.path.splitext(file_obj.name)[0]
+            address = os.path.splitext(file_obj.name)[-1]
+            src = hash_code(name)+address #到时候修改成服务器的地址
             if id == "-1":
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
@@ -676,7 +677,10 @@ def deleteFile(request):
         try:
             success = True
             id = json.loads(request.body)['id']
-            File.objects.filter(id = id).delete()
+            file = File.objects.get(id=id)
+            list = file.src.split("/")
+            File.objects.filter(id=id).delete()
+            os.remove(list[3])
         except Exception as e:
             success = False
             Data = str(e)
