@@ -581,7 +581,7 @@ def getUser(request):
             createDate = userInfo.createDate
             authFileList = []
             try:
-                FileList = File_User.objects.get(username_id=id)
+                FileList = File_User.objects.filter(username_id=id)
                 print(1)
                 if isinstance(FileList, Iterable) == True:
                     for authlist in FileList:
@@ -611,7 +611,7 @@ def getFile(request):
             id = json.loads(request.body)['fileId']
             fileInfo = File.objects.get(id=id)
             title = fileInfo.filename
-            content = fileInfo.content
+            content = fileInfo.contentge
             createDate = fileInfo.createDate
             type = fileInfo.type
             print(type)
