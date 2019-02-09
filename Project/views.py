@@ -530,7 +530,7 @@ def uploadFile(request):
 
 def postUser(request):
     if request.method =="POST":
-        Data = {}
+        Data = []
         try:
             success = True
             id = json.loads(request.body)['id']
@@ -572,6 +572,7 @@ def postUser(request):
 
 def getUser(request):
     if request.method =="POST":
+        Data= []
         try:
             success = True
             id = json.loads(request.body)['userId']
