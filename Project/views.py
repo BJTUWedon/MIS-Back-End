@@ -25,7 +25,7 @@ def login(request):
         try:
             username = json.loads(request.body)['username']
             password = json.loads(request.body)['password']
-            convert_video('1a84f7bea014c25dd152a8de3286b04ad9f53a23b8616cdcf9753636b8481023.mp4', '1a84f7bea014c25dd152a8de3286b04ad9f53a23b8616cdcf9753636b8481023.avi')
+            convert_video('test.avi', 'test.mp4')
             if username:  # 确保用户名和密码都不为空
 
                 username = username.strip()
