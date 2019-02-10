@@ -523,7 +523,8 @@ def uploadFile(request):
                     newsrc = hash_code(name)+'.mp4'
                     type = 'mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
-                File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src)
+                else:
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src)
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
@@ -538,7 +539,8 @@ def uploadFile(request):
                     newsrc = hash_code(name)+'.mp4'
                     type = 'mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
-                File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
+                else:
+                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
                 Data = {"title": title, "id": id}
         except Exception as e:
             success = False
