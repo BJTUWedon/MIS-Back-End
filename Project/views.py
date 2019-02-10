@@ -519,10 +519,11 @@ def uploadFile(request):
                         f.write(ffile)
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
-                    # os.remove(src)
-                    src = hash_code(name)+'.mp4'
-                File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+src)#我认为下面还要返回id
-
+                    os.remove(src)
+                    newsrc = hash_code(name)+'.mp4'
+                    type = 'mp4'
+                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
+                File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src)
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
