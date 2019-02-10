@@ -512,6 +512,7 @@ def uploadFile(request):
             name = os.path.splitext(file_obj.name)[0]
             address = os.path.splitext(file_obj.name)[-1]
             src = hash_code(name)+address #到时候修改成服务器的地址
+            print(src)
             if id == "-1":
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
