@@ -11,14 +11,40 @@ from collections import Iterable
 from django.utils import timezone
 import subprocess
 import time
+import pexpect
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
 globalUserId = 0
 def convert_video(video_input, video_output):
-    cmds = ['ffmpeg', '-i', video_input, video_output]
-    subprocess.Popen(cmds)
+    # cmds = ['ffmpeg', '-i', video_input, video_output]
+    # subprocess.Popen(cmds)
+
+
+    cmd = 'ffmpeg -i'+' '+video_input+' '+video_output
+    thread = pexpect.spawn(cmd)
+    print ("started %s" % cmd)
+    cpl = thread.compile_pattern_list([
+        pexpect.EOF,
+        "frame= *\d+",
+        '(.+)'
+    ])
+    while True:
+        i = thread.expect_list(cpl, timeout=None)
+        if i == 0:  # EOF
+            print
+            "the sub process exited"
+            break
+        elif i == 1:
+            frame_number = thread.match.group(0)
+            print
+            frame_number
+            thread.close
+        elif i == 2:
+            # unknown_line = thread.match.group(0)
+            # print unknown_line
+            pass
 
 def login(request):
     if request.method =="POST":
@@ -519,10 +545,10 @@ def uploadFile(request):
                         f.write(ffile)
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
-                    time.sleep(5)
+                    # time.sleep(5)
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
-                    type = 'mp4'
+                    # type = 'mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
                 else:
                     File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src)
@@ -536,9 +562,10 @@ def uploadFile(request):
                         f.write(ffile)
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
+                    time.sleep(5)
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
-                    type = 'mp4'
+                    # type = 'mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
                 else:
                     File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
