@@ -9,19 +9,24 @@ import datetime
 import json
 from collections import Iterable
 from django.utils import timezone
+import subprocess
 import time
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
 globalUserId = 0
+def convert_video(video_input, video_output):
+    cmds = ['ffmpeg', '-i', video_input, video_output]
+    subprocess.Popen(cmds)
 
 def login(request):
     if request.method =="POST":
         try:
             username = json.loads(request.body)['username']
             password = json.loads(request.body)['password']
-            if username and password:  # 确保用户名和密码都不为空
+            convert_video('1a84f7bea014c25dd152a8de3286b04ad9f53a23b8616cdcf9753636b8481023.mp4', '1a84f7bea014c25dd152a8de3286b04ad9f53a23b8616cdcf9753636b8481023.avi')
+            if username:  # 确保用户名和密码都不为空
 
                 username = username.strip()
                 # 用户名字符合法性验证
@@ -68,7 +73,7 @@ def login(request):
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
         resp.set_cookie('token', token, expires=expires*60*60*24)
         resp.set_cookie('isManager', user.isManager, expires=expires*60*60*24)
-        if user.isManager == False:
+        if user.isManager == False and user.authTime != 999999:
             User.objects.filter(id=id).update(authTime=0)
         return resp
 
@@ -543,7 +548,7 @@ def postUser(request):
                 pass
             limit = json.loads(request.body)['limit']#API请求参数新增 authtime
             if limit is None:
-                limit = 0
+                limit = 999999
             print(limit)
             authFileList = json.loads(request.body)['authFileList']#API请求参数新增 time
             if id == -1:
@@ -556,9 +561,9 @@ def postUser(request):
                     File_User.objects.create(username_id=username_id, filename_id=authFileList['id'],time=authFileList['limit'])
             else:
                 if password:
-                    User.objects.filter(id=id).update(username=username, email=email, password=hash_code(password))
+                    User.objects.filter(id=id).update(username=username, email=email, password=hash_code(password),createDate=datetime.datetime.now(),authTime=limit)
                 else:
-                    User.objects.filter(id=id).update(username=username, email=email)
+                    User.objects.filter(id=id).update(username=username, email=email,createDate=datetime.datetime.now(),authTime=limit)
                     # ,authtime=authtime
                 File_User.objects.filter(username_id=id).delete()
                 if isinstance(authFileList, Iterable) == True:
@@ -699,6 +704,7 @@ def logout(request):
             success = False
             Data = str(e)
             return JsonResponse({"success": success, "data": Data})
+
 
 
 
