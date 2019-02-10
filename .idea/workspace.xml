@@ -101,12 +101,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1062" />
+          <entry key="py" value="1113" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1062" />
+          <entry key="Python" value="1113" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -127,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="401">
-              <caret line="89" column="30" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="30" />
+              <caret line="89" column="30" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="30" />
               <folding>
                 <element signature="e#315#324#0" expanded="true" />
               </folding>
@@ -160,8 +160,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-60">
-              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+            <state relative-caret-position="540">
+              <caret line="529" column="38" lean-forward="true" selection-start-line="529" selection-start-column="38" selection-end-line="529" selection-end-column="38" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
               </folding>
@@ -207,7 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CORS_ORIGIN_WHITELIST</find>
       <find>postfile</find>
       <find>ACCESS_CONTROL_ALLOW_ORIGIN</find>
       <find>getUserl</find>
@@ -237,6 +236,7 @@
       <find>deleteF</find>
       <find>login</find>
       <find>upload</find>
+      <find>UPLOAD</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -258,8 +258,8 @@
         <option value="$PROJECT_DIR$/OPM_Project/urls.py" />
         <option value="$PROJECT_DIR$/Project/token.py" />
         <option value="$PROJECT_DIR$/1.py" />
-        <option value="$PROJECT_DIR$/Project/views.py" />
         <option value="$PROJECT_DIR$/OPM_Project/settings.py" />
+        <option value="$PROJECT_DIR$/Project/views.py" />
       </list>
     </option>
   </component>
@@ -456,7 +456,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5245203" side_tool="true" weight="0.35791758" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" weight="0.28230184" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.47547975" visible="true" weight="0.28230184" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -667,7 +667,7 @@
     <entry file="file://$PROJECT_DIR$/OPM_Project/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="401">
-          <caret line="89" column="30" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="30" />
+          <caret line="89" column="30" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="30" />
           <folding>
             <element signature="e#315#324#0" expanded="true" />
           </folding>
@@ -676,8 +676,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+        <state relative-caret-position="540">
+          <caret line="529" column="38" lean-forward="true" selection-start-line="529" selection-start-column="38" selection-end-line="529" selection-end-column="38" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
           </folding>
