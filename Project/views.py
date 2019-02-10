@@ -542,7 +542,7 @@ def uploadFile(request):
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                if address == '.avi':
+                if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff':
                     convert_video(src,hash_code(name)+'.mp4')
                     # time.sleep(5)
                     os.remove(src)
