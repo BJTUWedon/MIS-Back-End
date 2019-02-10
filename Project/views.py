@@ -519,6 +519,7 @@ def uploadFile(request):
                         f.write(ffile)
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
+                    time.sleep(5)
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
                     type = 'mp4'
@@ -528,7 +529,7 @@ def uploadFile(request):
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
-                Data = {"title": title, "id": id}
+                Data = {"title": title, "id": id, "type":type}
             else:
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
@@ -541,7 +542,7 @@ def uploadFile(request):
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
                 else:
                     File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
-                Data = {"title": title, "id": id}
+                Data = {"title": title, "id": id, "type": type}
         except Exception as e:
             success = False
             Data = str(e)
