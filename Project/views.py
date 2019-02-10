@@ -25,7 +25,6 @@ def login(request):
         try:
             username = json.loads(request.body)['username']
             password = json.loads(request.body)['password']
-            convert_video('test.avi', 'test.mp4')
             if username:  # 确保用户名和密码都不为空
 
                 username = username.strip()
@@ -517,6 +516,8 @@ def uploadFile(request):
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
+                if address == 'avi':
+                    convert_video(src,hash_code(name)+'.mp4')
                 File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+src)#我认为下面还要返回id
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
