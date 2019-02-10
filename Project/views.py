@@ -520,7 +520,7 @@ def uploadFile(request):
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
                     os.remove(src)
-                    src = hash_code(name)+'.mp4'            
+                    src = hash_code(name)+'.mp4'
                 File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+src)#我认为下面还要返回id
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
@@ -533,6 +533,8 @@ def uploadFile(request):
                         f.write(ffile)
                 if address == '.avi':
                     convert_video(src,hash_code(name)+'.mp4')
+                    os.remove(src)
+                    src = hash_code(name)+'.mp4'    
                 File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
                 Data = {"title": title, "id": id}
         except Exception as e:
