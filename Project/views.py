@@ -38,8 +38,7 @@ def convert_video(video_input, video_output):
             break
         elif i == 1:
             frame_number = thread.match.group(0)
-            print
-            frame_number
+            print(frame_number)
             thread.close
         elif i == 2:
             # unknown_line = thread.match.group(0)
