@@ -727,7 +727,7 @@ def getFile(request):
                     except:
                         limit = 1
                     Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,
-                                "type": type, "authUserList": authUserList, "limit": limit}
+                                "type": type, "authUserList": authUserList, "limit": float(limit)}
 
                 except Exception as e:
                     # print(3)
