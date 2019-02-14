@@ -697,16 +697,15 @@ def getFile(request):
                         username_id = Fileinfo.username_id
                         time = Fileinfo.time
                         authUserList = [{"id": username_id, "limit": time}]
-                    Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
+                    Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
                 except Exception as e:
                     # print(3)
                     # success = False
                     # Data = str(e)
                     time = FileList.time
                     Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                            "authUserList": authUserList,"limit":time}
+                            "authUserList": authUserList,"limit":float(limit)}
             if (User.objects.get(id=userid).isManager == True):
-                try:
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                         limit = thisUserFile.time
@@ -728,14 +727,6 @@ def getFile(request):
                         limit = 1
                     Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,
                                 "type": type, "authUserList": authUserList, "limit": float(limit)}
-
-                except Exception as e:
-                    # print(3)
-                    # success = False
-                    # Data = str(e)
-                    time = FileList.time
-                    Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                            "authUserList": authUserList,"limit":time}
         except Exception as e:
             success = False
             Data = str(e)
