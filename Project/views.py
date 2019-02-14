@@ -705,15 +705,12 @@ def getFile(request):
                     time = FileList.time
                     Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
                             "authUserList": authUserList,"limit":time}
-            if (User.objects.get(id=userid).isManager == True):
-                try:
-                    FileList = File_User.objects.get(username_id=userid, filename_id=id)
-                except:
-                    pass
+            if (User.objects.get(id=userid).isManager == True): #即使没有权限也能访问和编辑
                 try:
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                         limit = thisUserFile.time
+                        print(type(limit))
                         Fileinfo = File_User.objects.filter(filename_id=id)
                         if isinstance(Fileinfo, Iterable) == True:
                             for authlist in Fileinfo:
