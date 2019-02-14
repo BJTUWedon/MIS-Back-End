@@ -456,7 +456,8 @@ def getFileList(request):
                         content = file.content
                         type = file.type
                         createDate = file.createDate
-                        info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate}
+                        info = {"id": id, "title": filename, "content": content, "type": type, "createDate": createDate}
+                        # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                         Data.append(info)
                 else:
                     id = Files.id
@@ -464,7 +465,8 @@ def getFileList(request):
                     content = Files.content
                     type = Files.type
                     createDate = Files.createDate
-                    Data = {"id": id, "title": filename, "content": content, "type": type,"createDate":createDate}
+                    Data = {"id": id, "title": filename, "content": content, "type": type, "createDate": createDate}
+                    # Data = {"id": "_fake_asdsa", "title": filename, "content": content, "type": type,"createDate":createDate,"group":[111]}
             else:
                 pass
         except Exception as e:
@@ -475,6 +477,8 @@ def getFileList(request):
         # response_data['data'] = Data
         # response_data['userid'] = globalUserId
         # return HttpResponse(json.dumps(response_data), content_type="application/json")
+        # Data = {"id": "_fake_asdsa", "title": "", "content": "", "type": "", "createDate": "",
+        #         "group": ["111"]}
         return JsonResponse({"success": success, "data": Data,"userid":globalUserId},safe=False)
 def postFile(request):
     if request.method =="POST":
@@ -559,9 +563,9 @@ def uploadFile(request):
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
                         f.write(ffile)
-                if address == '.avi':
+                if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff' or address == '.asf':
                     convert_video(src,hash_code(name)+'.mp4')
-                    time.sleep(5)
+                    # time.sleep(5)
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
                     # type = 'mp4'
@@ -671,34 +675,42 @@ def getFile(request):
             # print(token)
             tokenInfo = Token.objects.get(Token=token)
             userid = tokenInfo.username_id
-            try:
-                FileList = File_User.objects.get(username_id=userid, filename_id=id)
-            except:
-                return JsonResponse({"success": False, "data": "You can`t open this file"})
-            try:
-                thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
-                limit = thisUserFile.time
-                Fileinfo = File_User.objects.filter(filename_id=id)
-                if isinstance(Fileinfo, Iterable) == True:
-                    for authlist in Fileinfo:
-                        username_id = authlist.username_id
-                        time = authlist.time
-                        jsonArray = {"id":username_id, "limit":time}
-                        authUserList.append(jsonArray)
-                        print(1)
-                else:
-                    print(2)
-                    username_id = Fileinfo.username_id
-                    time = Fileinfo.time
-                    authUserList = [{"id": username_id, "limit": time}]
-                Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
-            except Exception as e:
-                # print(3)
-                # success = False
-                # Data = str(e)
-                time = FileList.time
-                Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                        "authUserList": authUserList,"limit":time}
+
+            if (User.objects.get(id=userid).isManager == False):
+                print(1)
+                try:
+                    FileList = File_User.objects.get(username_id=userid, filename_id=id)
+                except:
+                    return JsonResponse({"success": False, "data": "You can`t open this file"})
+                try:
+                    thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
+                    limit = thisUserFile.time
+                    Fileinfo = File_User.objects.filter(filename_id=id)
+                    if isinstance(Fileinfo, Iterable) == True:
+                        for authlist in Fileinfo:
+                            username_id = authlist.username_id
+                            time = authlist.time
+                            jsonArray = {"id":username_id, "limit":time}
+                            authUserList.append(jsonArray)
+                            print(1)
+                    else:
+                        print(2)
+                        username_id = Fileinfo.username_id
+                        time = Fileinfo.time
+                        authUserList = [{"id": username_id, "limit": time}]
+                    Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":limit}
+                except Exception as e:
+                    # print(3)
+                    # success = False
+                    # Data = str(e)
+                    time = FileList.time
+                    Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
+                            "authUserList": authUserList,"limit":time}
+            if (User.objects.get(id=userid).isManager == True):
+                print(2)
+                limit = 1
+                Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,
+                        "type": type, "authUserList": authUserList, "limit": limit}
         except Exception as e:
             success = False
             Data = str(e)
@@ -746,7 +758,27 @@ def logout(request):
             return JsonResponse({"success": success, "data": Data})
 
 
+def arrayIntochar(array):
+    char = array.join("|")
+    return char
 
+def charIntoarray(char):
+    array = char.split("|")
+    return array
+def postFileList(request):
+    if request.method =="POST":
+        Data=[]
+        try:
+            success = True
+            id = json.loads(request.body)['id']
+            file = File.objects.get(id=id)
+            list = file.src.split("/")
+            File.objects.filter(id=id).delete()
+            os.remove(list[3])
+        except Exception as e:
+            success = False
+            Data = str(e)
+        return JsonResponse({"success": success, "data": Data})
 
 
 
