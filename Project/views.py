@@ -710,6 +710,7 @@ def getFile(request):
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                         limit = thisUserFile.time
+                        print(type(limit))
                         Fileinfo = File_User.objects.filter(filename_id=id)
                         if isinstance(Fileinfo, Iterable) == True:
                             for authlist in Fileinfo:
