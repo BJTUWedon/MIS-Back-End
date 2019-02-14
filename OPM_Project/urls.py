@@ -49,4 +49,5 @@ urlpatterns = [
     url(r'^deleteUser$', deleteUser),
     url(r'^deleteFile', deleteFile),
     url(r'^logOut', logout),
+    url(r'^postFileList',postFileList),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

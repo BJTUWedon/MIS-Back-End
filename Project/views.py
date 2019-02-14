@@ -477,7 +477,7 @@ def getFileList(request):
         # response_data['data'] = Data
         # response_data['userid'] = globalUserId
         # return HttpResponse(json.dumps(response_data), content_type="application/json")
-        # Data = {"id": "_fake_asdsa", "title": "", "content": "", "type": "", "createDate": "",
+        # Data = {"id": "_fake_", "title": "", "content": "", "type": "", "createDate": "",
         #         "group": ["111"]}
         return JsonResponse({"success": success, "data": Data,"userid":globalUserId},safe=False)
 def postFile(request):
@@ -684,19 +684,19 @@ def getFile(request):
                 try:
                     thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                     limit = thisUserFile.time
-                    Fileinfo = File_User.objects.filter(filename_id=id)
-                    if isinstance(Fileinfo, Iterable) == True:
-                        for authlist in Fileinfo:
-                            username_id = authlist.username_id
-                            time = authlist.time
-                            jsonArray = {"id":username_id, "limit":time}
-                            authUserList.append(jsonArray)
-                            print(1)
-                    else:
-                        print(2)
-                        username_id = Fileinfo.username_id
-                        time = Fileinfo.time
-                        authUserList = [{"id": username_id, "limit": time}]
+                    # Fileinfo = File_User.objects.filter(filename_id=id)
+                    # if isinstance(Fileinfo, Iterable) == True:
+                    #     for authlist in Fileinfo:
+                    #         username_id = authlist.username_id
+                    #         time = authlist.time
+                    #         jsonArray = {"id":username_id, "limit":time}
+                    #         authUserList.append(jsonArray)
+                    #         print(1)
+                    # else:
+                    #     print(2)
+                    #     username_id = Fileinfo.username_id
+                    #     time = Fileinfo.time
+                    #     authUserList = [{"id": username_id, "limit": time}]
                     Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
                 except Exception as e:
                     # print(3)
@@ -783,18 +783,19 @@ def charIntoarray(char):
     return array
 def postFileList(request):
     if request.method =="POST":
-        Data=[]
-        try:
-            success = True
-            id = json.loads(request.body)['id']
-            file = File.objects.get(id=id)
-            list = file.src.split("/")
-            File.objects.filter(id=id).delete()
-            os.remove(list[3])
-        except Exception as e:
-            success = False
-            Data = str(e)
-        return JsonResponse({"success": success, "data": Data})
+        # Data=[]
+        # try:
+        #     success = True
+        #     id = json.loads(request.body)['id']
+        #     file = File.objects.get(id=id)
+        #     list = file.src.split("/")
+        #     File.objects.filter(id=id).delete()
+        #     os.remove(list[3])
+        # except Exception as e:
+        #     success = False
+        #     Data = str(e)
+        # return JsonResponse({"success": success, "data": Data})
+        return JsonResponse({"success": True, "data": []})
 
 
 
