@@ -19,7 +19,7 @@ class User(models.Model):
     createDate = models.DateTimeField(default="")
     email = models.EmailField(default="")
     isManager = models.BooleanField(default=False)
-    group = models.CharField(max_length=250, default="")
+    # group = models.CharField(max_length=250, default="")
     def __unicode__(self):
         return self.username
 
@@ -31,7 +31,7 @@ class File(models.Model):
     type = models.CharField(max_length=128)
     createDate = models.DateTimeField(default="")
     src = models.URLField(default="")
-    group = models.CharField(max_length=250, default="")
+    # group = models.CharField(max_length=250, default="")
     def __unicode__(self):
         return self.filename
 

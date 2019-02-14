@@ -101,12 +101,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1736" />
+          <entry key="py" value="1747" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1736" />
+          <entry key="Python" value="1747" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -160,13 +160,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="710" column="83" lean-forward="true" selection-start-line="710" selection-start-column="83" selection-end-line="710" selection-end-column="83" />
+            <state relative-caret-position="370">
+              <caret line="709" column="23" selection-start-line="709" selection-start-column="23" selection-end-line="709" selection-end-column="23" />
               <folding>
                 <element signature="e#18#49#0" expanded="true" />
-                <marker date="1550118589544" expanded="true" signature="454:459" ph="..." />
-                <marker date="1550118589544" expanded="true" signature="32054:32099" ph="..." />
-                <marker date="1550118589544" expanded="true" signature="32195:32646" ph="..." />
+                <marker date="1550118658443" expanded="true" signature="454:459" ph="..." />
+                <marker date="1550118658443" expanded="true" signature="32104:32149" ph="..." />
+                <marker date="1550118658443" expanded="true" signature="32245:32696" ph="..." />
               </folding>
             </state>
           </provider>
@@ -666,13 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -694,15 +687,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Project/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="710" column="83" lean-forward="true" selection-start-line="710" selection-start-column="83" selection-end-line="710" selection-end-column="83" />
+        <state relative-caret-position="370">
+          <caret line="709" column="23" selection-start-line="709" selection-start-column="23" selection-end-line="709" selection-end-column="23" />
           <folding>
             <element signature="e#18#49#0" expanded="true" />
-            <marker date="1550118589544" expanded="true" signature="454:459" ph="..." />
-            <marker date="1550118589544" expanded="true" signature="32054:32099" ph="..." />
-            <marker date="1550118589544" expanded="true" signature="32195:32646" ph="..." />
+            <marker date="1550118658443" expanded="true" signature="454:459" ph="..." />
+            <marker date="1550118658443" expanded="true" signature="32104:32149" ph="..." />
+            <marker date="1550118658443" expanded="true" signature="32245:32696" ph="..." />
           </folding>
         </state>
       </provider>
