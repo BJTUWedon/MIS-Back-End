@@ -83,8 +83,9 @@ def login(request):
                         return JsonResponse({"success": success, "data": Data})
                 except Exception as e:
                     success = False
-                    Data = str(e)
-                    token = '1'
+                    # Data = str(e)
+                    # token = '1'
+                    Data = "Username is wrong!"
                     return JsonResponse({"success": success, "data": Data})
                 # except:
                 #     success = False
