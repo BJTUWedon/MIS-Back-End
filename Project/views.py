@@ -707,10 +707,6 @@ def getFile(request):
                             "authUserList": authUserList,"limit":time}
             if (User.objects.get(id=userid).isManager == True):
                 try:
-                    FileList = File_User.objects.get(username_id=userid, filename_id=id)
-                except:
-                    pass
-                try:
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                         limit = thisUserFile.time
