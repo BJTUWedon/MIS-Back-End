@@ -457,7 +457,10 @@ def getFileList(request):
                         content = file.content
                         type = file.type
                         createDate = file.createDate
-                        info = {"id": id, "title": filename, "content": content, "type": type, "createDate": createDate}
+                        if (filename[0:6]=="_fake_"):
+                            info = {"id": filename, "title": filename, "content": content, "type": type,"createDate": createDate,"group":charIntoarray(file.group)}
+                        else:
+                            info = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(file.group)}
                         # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                         Data.append(info)
                 else:
@@ -466,7 +469,7 @@ def getFileList(request):
                     content = Files.content
                     type = Files.type
                     createDate = Files.createDate
-                    Data = {"id": id, "title": filename, "content": content, "type": type, "createDate": createDate}
+                    Data = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(Files.group)}
                     # Data = {"id": "_fake_asdsa", "title": filename, "content": content, "type": type,"createDate":createDate,"group":[111]}
             else:
                 pass
@@ -776,7 +779,8 @@ def logout(request):
 
 
 def arrayIntochar(array):
-    char = array.join("|")
+    # char = array.join("|")
+    char = '|'.join(array)
     return char
 
 def charIntoarray(char):
@@ -784,20 +788,33 @@ def charIntoarray(char):
     return array
 def postFileList(request):
     if request.method =="POST":
-        # Data=[]
-        # try:
-        #     success = True
-        #     id = json.loads(request.body)['id']
-        #     file = File.objects.get(id=id)
-        #     list = file.src.split("/")
-        #     File.objects.filter(id=id).delete()
-        #     os.remove(list[3])
-        # except Exception as e:
-        #     success = False
-        #     Data = str(e)
-        # return JsonResponse({"success": success, "data": Data})
-        return JsonResponse({"success": True, "data": []})
-
-
-
-
+        Data=[]
+        try:
+            success = True
+            arrays = json.loads(request.body)
+            for array in arrays:
+                id = array['id']
+                if (id[0:6]=="_fake_"):
+                    File.objects.filter(filename__contains="_fake_").delete() #一检测到就删除然后跳出循环
+                    continue
+            for array in arrays:
+                id = array['id']
+                group = array['group']
+                if (id[0:6]=="_fake_"):
+                    fakeinfo = File.objects.filter(filename__contains="_fake_")
+                    result = 0
+                    for fake in fakeinfo: #防止重复
+                        oldgroup = fake.group
+                        if (oldgroup==arrayIntochar(group)):
+                            result = 1
+                            continue
+                    if (result ==1):
+                        continue
+                    filename = "_fake_"+hash_code(str(datetime.datetime.now()))
+                    File.objects.create(filename=filename,group=arrayIntochar(group),createDate=datetime.datetime.now())
+                else:
+                    File.objects.filter(id=id).update(group=arrayIntochar(group)) #group全量更新
+        except Exception as e:
+            success = False
+            Data = str(e)
+        return JsonResponse({"success": success, "data": Data})
