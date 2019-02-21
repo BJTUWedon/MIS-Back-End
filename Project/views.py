@@ -719,19 +719,19 @@ def getFile(request):
                 try:
                     thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                     limit = thisUserFile.time
-                    # Fileinfo = File_User.objects.filter(filename_id=id)
-                    # if isinstance(Fileinfo, Iterable) == True:
-                    #     for authlist in Fileinfo:
-                    #         username_id = authlist.username_id
-                    #         time = authlist.time
-                    #         jsonArray = {"id":username_id, "limit":time}
-                    #         authUserList.append(jsonArray)
-                    #         print(1)
-                    # else:
-                    #     print(2)
-                    #     username_id = Fileinfo.username_id
-                    #     time = Fileinfo.time
-                    #     authUserList = [{"id": username_id, "limit": time}]
+                    Fileinfo = File_User.objects.filter(filename_id=id)
+                    if isinstance(Fileinfo, Iterable) == True:
+                        for authlist in Fileinfo:
+                            username_id = authlist.username_id
+                            time = authlist.time
+                            jsonArray = {"id":str(username_id), "limit":float(time)}
+                            authUserList.append(jsonArray)
+                            print(1)
+                    else:
+                        print(2)
+                        username_id = Fileinfo.username_id
+                        time = Fileinfo.time
+                        authUserList = [{"id": str(username_id), "limit":float(time)}]
                     Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
                 except Exception as e:
                     # print(3)
@@ -750,14 +750,14 @@ def getFile(request):
                             for authlist in Fileinfo:
                                 username_id = authlist.username_id
                                 time = authlist.time
-                                jsonArray = {"id": username_id, "limit": time}
+                                jsonArray = {"id":str(username_id), "limit":float(time)}
                                 authUserList.append(jsonArray)
                                 print(1)
                         else:
                             print(2)
                             username_id = Fileinfo.username_id
                             time = Fileinfo.time
-                            authUserList = [{"id": username_id, "limit": time}]
+                            authUserList = [{"id": str(username_id), "limit": float(time)}]
                     except:
                         limit = 1
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
