@@ -815,6 +815,8 @@ def arrayIntochar(array):
     return char
 
 def charIntoarray(char):
+    if char is None:
+        return []
     array = char.split(",")
     return array
 def postFileList(request):
