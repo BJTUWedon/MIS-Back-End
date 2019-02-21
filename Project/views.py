@@ -422,14 +422,14 @@ def getUserList(request):
                         username = user.username
                         createDate = user.createDate
                         authTime = user.authTime #API新增
-                        userinfo = {"id":id, "username":username, "createDate":createDate, "limit":authTime}#API新增
+                        userinfo = {"id":str(id), "username":username, "createDate":createDate, "limit":authTime}#API新增
                         Data.append(userinfo)
                 else:
                     id = Users.id
                     username = Users.username
                     createDate = Users.createDate
                     authTime = Users.authTime  # API新增
-                    Data = {"id": id, "username": username, "createDate": createDate, "authTime": authTime}  # API新增
+                    Data = {"id": str(id), "username": username, "createDate": createDate, "authTime": authTime}  # API新增
             else:
                 pass
         except Exception as e:
@@ -445,34 +445,63 @@ def getUserList(request):
 
 def getFileList(request):
     if request.method == "GET":
-        Files = File.objects.all().order_by('-id')
-        Data = []
         try:
             success = True
-            if Files:  # 数据po库有数据
-                if isinstance(Files, Iterable) == True:
-                    for file in Files:
+            token = request.COOKIES["token"]
+            tokenInfo = Token.objects.get(Token=token)
+            userid = tokenInfo.username_id
+            Userinfo = User.objects.get(id=userid)
+            isManager = Userinfo.isManager
+            Data = []
+            if(isManager==False):
+                Fileinfo = File_User.objects.filter(username_id=userid).order_by('-filename_id')
+                if Fileinfo:
+                    for a in Fileinfo:
+                        id = a.filename_id
+                        file = File.objects.get(id=id)
                         id = file.id
                         filename = file.filename
                         content = file.content
                         type = file.type
                         createDate = file.createDate
-                        if (filename[0:6]=="_fake_"):
-                            info = {"id": filename, "title": filename, "content": content, "type": type,"createDate": createDate,"group":charIntoarray(file.group)}
+                        if (filename[0:6] == "_fake_"):
+                            info = {"id": filename, "title": filename, "content": content, "type": type,
+                                    "createDate": createDate, "group": charIntoarray(file.group)}
                         else:
-                            info = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(file.group)}
+                            info = {"id": str(id), "title": filename, "content": content, "type": type,
+                                    "createDate": createDate, "group": charIntoarray(file.group)}
                         # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                         Data.append(info)
-                else:
-                    id = Files.id
-                    filename = Files.filename
-                    content = Files.content
-                    type = Files.type
-                    createDate = Files.createDate
-                    Data = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(Files.group)}
-                    # Data = {"id": "_fake_asdsa", "title": filename, "content": content, "type": type,"createDate":createDate,"group":[111]}
             else:
-                pass
+                Files = File.objects.all().order_by('-id')
+                try:
+                    if Files:  # 数据po库有数据
+                        if isinstance(Files, Iterable) == True:
+                            for file in Files:
+                                id = file.id
+                                filename = file.filename
+                                content = file.content
+                                type = file.type
+                                createDate = file.createDate
+                                if (filename[0:6]=="_fake_"):
+                                    info = {"id": filename, "title": filename, "content": content, "type": type,"createDate": createDate,"group":charIntoarray(file.group)}
+                                else:
+                                    info = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(file.group)}
+                                # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
+                                Data.append(info)
+                        else:
+                            id = Files.id
+                            filename = Files.filename
+                            content = Files.content
+                            type = Files.type
+                            createDate = Files.createDate
+                            Data = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(Files.group)}
+                            # Data = {"id": "_fake_asdsa", "title": filename, "content": content, "type": type,"createDate":createDate,"group":[111]}
+                    else:
+                        pass
+                except Exception as e:
+                    success = False
+                    Data = str(e)
         except Exception as e:
             success = False
             Data = str(e)
@@ -507,10 +536,10 @@ def postFile(request):
                 if isinstance(authUserList,Iterable)==True:
                     for authlist in authUserList:
                         File_User.objects.create(filename_id=filename_id,username_id=authlist['id'], time=authlist['limit'])
-                    Data = {"title": title, "id": filename_id}
+                    Data = {"title": title, "id": str(filename_id)}
                 else:
                     File_User.objects.create(filename_id=filename_id, username_id=authUserList['id'],time=authUserList['limit'])
-                    Data = {"title": title, "id": filename_id}
+                    Data = {"title": title, "id": str(filename_id)}
             else:
                 if type:
                     File.objects.filter(id=id).update(type=type, filename=title, content=content,createDate=datetime.datetime.now())
@@ -521,10 +550,10 @@ def postFile(request):
                     for authlist in authUserList:
                         File_User.objects.create(filename_id=id, username_id=authlist['id'], time=authlist['limit'])
                         print(1)
-                    Data = {"title": title, "id": id}
+                    Data = {"title": title, "id":str(id)}
                 else:
                     File_User.objects.create(filename_id=id, username_id=authUserList['id'], time=authUserList['limit'])
-                    Data = {"title": title, "id": id}
+                    Data = {"title": title, "id": str(id)}
         except Exception as e:
             success = False
             Data = str(e)
@@ -542,6 +571,7 @@ def uploadFile(request):
             content = request.POST.get('content','')
             type = request.POST.get('type','')
             file_obj = request.FILES['file']
+            group = request.POST.get('group')
             name = os.path.splitext(file_obj.name)[0]
             address = os.path.splitext(file_obj.name)[-1]
             src = hash_code(name)+address #到时候修改成服务器的地址
@@ -556,13 +586,13 @@ def uploadFile(request):
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
                     # type = 'mp4'
-                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
+                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
                 else:
-                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src)
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
-                Data = {"title": title, "id": id, "type":type}
+                Data = {"title": title, "id": str(id), "type":type}
             else:
                 with open(src, 'wb')as f:
                     for ffile in file_obj.chunks():
@@ -573,10 +603,10 @@ def uploadFile(request):
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
                     # type = 'mp4'
-                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc)#我认为下面还要返回id
+                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
                 else:
-                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src)
-                Data = {"title": title, "id": id, "type": type}
+                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src,group=group)
+                Data = {"title": title, "id": str(id), "type": type}
         except Exception as e:
             success = False
             Data = str(e)
@@ -599,6 +629,7 @@ def postUser(request):
                 limit = 999999
             print(limit)
             authFileList = json.loads(request.body)['authFileList']#API请求参数新增 time
+            print(authFileList)
             if id == -1:
                 User.objects.create(username=username, email=email, password=hash_code(password),createDate=datetime.datetime.now(),authTime=limit)
                 username_id = User.objects.all()[0].id
@@ -641,7 +672,7 @@ def getUser(request):
                     for authlist in FileList:
                         filename_id = authlist.filename_id
                         time = authlist.time
-                        jsonArray = {"id":filename_id, "limit":time}
+                        jsonArray = {"id":str(filename_id), "limit":double(time)}
                         authFileList.append(jsonArray)
                         print(3)
                         Data = {"username": username, "email": email, "createDate": createDate,
@@ -649,7 +680,7 @@ def getUser(request):
                 else:
                     filename_id = FileList.filename_id
                     time = FileList.time
-                    authFileList = {"id": filename_id, "limit": time}
+                    authFileList = {"id":str(filename_id), "limit": doouble(time)}
                     Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
                     print(4)
                 return JsonResponse({"success": success, "data": Data})
@@ -666,7 +697,7 @@ def getFile(request):
     if request.method =="POST":
         try:
             success = True
-            id = json.loads(request.body)['fileId']
+            id = int(json.loads(request.body)['fileId'])
             fileInfo = File.objects.get(id=id)
             title = fileInfo.filename
             content = fileInfo.content
@@ -701,13 +732,13 @@ def getFile(request):
                     #     username_id = Fileinfo.username_id
                     #     time = Fileinfo.time
                     #     authUserList = [{"id": username_id, "limit": time}]
-                    Data = {"id":id,"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
+                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
                 except Exception as e:
                     # print(3)
                     # success = False
                     # Data = str(e)
                     time = FileList.time
-                    Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
+                    Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
                             "authUserList": authUserList,"limit":float(limit)}
             if (User.objects.get(id=userid).isManager == True):
                     try:
@@ -729,7 +760,7 @@ def getFile(request):
                             authUserList = [{"id": username_id, "limit": time}]
                     except:
                         limit = 1
-                    Data = {"id": id, "title": title, "content": content, "src": src, "createDate": createDate,
+                    Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
                                 "type": type, "authUserList": authUserList, "limit": float(limit)}
         except Exception as e:
             success = False
@@ -780,11 +811,11 @@ def logout(request):
 
 def arrayIntochar(array):
     # char = array.join("|")
-    char = '|'.join(array)
+    char = ','.join(array)
     return char
 
 def charIntoarray(char):
-    array = char.split("|")
+    array = char.split(",")
     return array
 def postFileList(request):
     if request.method =="POST":
