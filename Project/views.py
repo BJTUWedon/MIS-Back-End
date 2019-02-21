@@ -815,7 +815,7 @@ def arrayIntochar(array):
     return char
 
 def charIntoarray(char):
-    if char is None:
+    if char == "":
         return []
     array = char.split(",")
     return array
