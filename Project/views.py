@@ -712,13 +712,22 @@ def getFile(request):
             userid = tokenInfo.username_id
 
             if (User.objects.get(id=userid).isManager == False):
+                #判断有无权限
                 try:
                     FileList = File_User.objects.get(username_id=userid, filename_id=id)
                 except:
                     return JsonResponse({"success": False, "data": "You can`t open this file"})
-                try:
-                    thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
+                #判断父文件夹有无全新啊
+                thisUserFile = File_User.objects.get(filename_id=id, username_id=userid) #取出文件
+                thisGroup = thisUserFile.group
+                if thisGroup == "": #根目录，那就自身权限
                     limit = thisUserFile.time
+                thisFakeFile = File_User.objects.get(filename__contains="fake", group=thisGroup)
+                        if thisFakeFile.group = "":
+                            limit = thisUserFile.time
+                        else:
+                            limit = thisFakeFile.time
+                try:
                     Fileinfo = File_User.objects.filter(filename_id=id)
                     if isinstance(Fileinfo, Iterable) == True:
                         for authlist in Fileinfo:
