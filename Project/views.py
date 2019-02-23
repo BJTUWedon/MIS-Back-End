@@ -723,10 +723,10 @@ def getFile(request):
                 if thisGroup == "": #根目录，那就自身权限
                     limit = thisUserFile.time
                 thisFakeFile = File_User.objects.get(filename__contains="fake", group=thisGroup)
-                        if thisFakeFile.group = "":
-                            limit = thisUserFile.time
-                        else:
-                            limit = thisFakeFile.time
+                if thisFakeFile.group == "":
+                    limit = thisUserFile.time
+                else:
+                    limit = thisFakeFile.time
                 try:
                     Fileinfo = File_User.objects.filter(filename_id=id)
                     if isinstance(Fileinfo, Iterable) == True:
