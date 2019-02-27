@@ -859,4 +859,4 @@ def postFileList(request):
         except Exception as e:
             success = False
             Data = str(e)
-        return JsonResponse({"success": success, "data": Data})
+        return JsonResponse({"success": success, "id": filename})

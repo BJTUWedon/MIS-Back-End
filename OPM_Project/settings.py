@@ -183,6 +183,7 @@ CORS_ORIGIN_WHITELIST = (
     '104.168.134.52:8000',
     '104.168.134.52:8001',
     'localhost:8080',
+    'localhost:8000',
 )
 
 
