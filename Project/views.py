@@ -466,10 +466,10 @@ def getFileList(request):
                         createDate = file.createDate
                         if (filename[0:6] == "_fake_"):
                             info = {"id": filename, "title": filename, "content": content, "type": type,
-                                    "createDate": createDate, "group": charIntoarray(file.group)}
+                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":"wedon"}
                         else:
                             info = {"id": str(id), "title": filename, "content": content, "type": type,
-                                    "createDate": createDate, "group": charIntoarray(file.group)}
+                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":"wedon"}
                         # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                         Data.append(info)
             else:
@@ -484,9 +484,9 @@ def getFileList(request):
                                 type = file.type
                                 createDate = file.createDate
                                 if (filename[0:6]=="_fake_"):
-                                    info = {"id": filename, "title": filename, "content": content, "type": type,"createDate": createDate,"group":charIntoarray(file.group)}
+                                    info = {"id": filename, "title": filename, "content": content, "type": type,"createDate": createDate,"group":charIntoarray(file.group),"creator":"wedon"}
                                 else:
-                                    info = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(file.group)}
+                                    info = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(file.group),"creator":"wedon"}
                                 # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                                 Data.append(info)
                         else:
@@ -495,7 +495,7 @@ def getFileList(request):
                             content = Files.content
                             type = Files.type
                             createDate = Files.createDate
-                            Data = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(Files.group)}
+                            Data = {"id": str(id), "title": filename, "content": content, "type": type, "createDate": createDate,"group":charIntoarray(Files.group),"creator":"wedon"}
                             # Data = {"id": "_fake_asdsa", "title": filename, "content": content, "type": type,"createDate":createDate,"group":[111]}
                     else:
                         pass
@@ -638,6 +638,9 @@ def postUser(request):
                         File_User.objects.create(username_id=username_id,filename_id=authlist['id'], time=authlist['limit'])
                 else:
                     File_User.objects.create(username_id=username_id, filename_id=authFileList['id'],time=authFileList['limit'])
+                fakeFileInfo = FIle.objects.filter(filename__contains= "fake")
+                for fakeinfo in fakeFileInfo:
+                    File_User.objects.create(username_id=username_id,filename_id=fakeinfo[id]) #创建文件夹权限表
             else:
                 if password:
                     User.objects.filter(id=id).update(username=username, email=email, password=hash_code(password),createDate=datetime.datetime.now(),authTime=limit)
@@ -647,6 +650,10 @@ def postUser(request):
                 File_User.objects.filter(username_id=id).delete()
                 if isinstance(authFileList, Iterable) == True:
                     for authlist in authFileList:
+                        if (authlist['id'][0:6]=="_fake_"):
+                            filename_id = File.objects.filter(filename=authlist['id']).id
+                            print(filename_id)
+                            File_User.objects.create(username_id=id, filename_id=filename_id, time=authlist['limit'])
                         File_User.objects.create(username_id=id, filename_id=authlist['id'], time=authlist['limit'])
                 else:
                     File_User.objects.create(username_id=id, filename_id=authFileList['id'], time=authFileList['limit'])
@@ -665,14 +672,22 @@ def getUser(request):
             email = userInfo.email
             createDate = userInfo.createDate
             authFileList = []
+            FileList = File_User.objects.filter(username_id=id)
             try:
-                FileList = File_User.objects.filter(username_id=id)
                 print(1)
                 if isinstance(FileList, Iterable) == True:
                     for authlist in FileList:
                         filename_id = authlist.filename_id
                         time = authlist.time
-                        jsonArray = {"id":str(filename_id), "limit":float(time)}
+                        if authlist.time is not None:
+                            print("xixiix")
+                            jsonArray = {"id": str(filename_id), "limit": float(time)}
+                        else:
+                            print("hhaha")
+                            jsonArray = {
+                                "id": "_fake_44b1b64be57eb0cab43ed017999703d57322d4674c8d132aab9a93ffbf54506e",
+                                "limit": time}
+                            # jsonArray = {"id": str(filename_id), "limit": time}
                         authFileList.append(jsonArray)
                         print(3)
                         Data = {"username": username, "email": email, "createDate": createDate,
@@ -680,7 +695,13 @@ def getUser(request):
                 else:
                     filename_id = FileList.filename_id
                     time = FileList.time
-                    authFileList = {"id":str(filename_id), "limit": float(time)}
+                    if time is not None:
+                        print("xixiix")
+                        authFileList = {"id": str(filename_id), "limit": float(time)}
+                    else:
+                        print("hhaha")
+                        authFileList = {"id": str(filename_id), "limit": time}
+
                     Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
                     print(4)
                 return JsonResponse({"success": success, "data": Data})
@@ -834,11 +855,11 @@ def postFileList(request):
         try:
             success = True
             arrays = json.loads(request.body)
-            for array in arrays:
-                id = array['id']
-                if (id[0:6]=="_fake_"):
-                    File.objects.filter(filename__contains="_fake_").delete() #一检测到就删除然后跳出循环
-                    continue
+            # for array in arrays:
+            #     id = array['id']
+            #     if (id[0:6]=="_fake_"):
+            #         File.objects.filter(filename__contains="_fake_").delete() #一检测到就删除然后跳出循环
+            #         continue
             for array in arrays:
                 id = array['id']
                 group = array['group']
@@ -854,9 +875,16 @@ def postFileList(request):
                         continue
                     filename = "_fake_"+hash_code(str(datetime.datetime.now()))
                     File.objects.create(filename=filename,group=arrayIntochar(group),createDate=datetime.datetime.now())
+                    #更新权限表的问题
+                    filename_id = File.objects.all().order_by('-id')[0].id
+                    print(filename_id)
+                    Userinfo = User.objects.all()
+                    for authlist in Userinfo:
+                        File_User.objects.create(filename_id=filename_id,username_id=authlist.id) #创建文件夹权限表
+
                 else:
                     File.objects.filter(id=id).update(group=arrayIntochar(group)) #group全量更新
         except Exception as e:
             success = False
             Data = str(e)
-        return JsonResponse({"success": success, "id": filename})
+        return JsonResponse({"success": success, "Data":Data})

@@ -39,7 +39,7 @@ class File_User(models.Model):
     id = models.AutoField(primary_key=True)
     filename = models.ForeignKey(File)
     username = models.ForeignKey(User)
-    time = models.DecimalField(max_digits=10,decimal_places=2)
+    time = models.DecimalField(max_digits=10,decimal_places=2,null=True)
 
 class Token(models.Model):
     Token = models.CharField(max_length=250)
