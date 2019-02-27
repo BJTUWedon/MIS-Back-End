@@ -684,8 +684,9 @@ def getUser(request):
                             jsonArray = {"id": str(filename_id), "limit": float(time)}
                         else:
                             print("hhaha")
+
                             jsonArray = {
-                                "id": "_fake_44b1b64be57eb0cab43ed017999703d57322d4674c8d132aab9a93ffbf54506e",
+                                "id": str("_fake_44b1b64be57eb0cab43ed017999703d57322d4674c8d132aab9a93ffbf54506e"),
                                 "limit": time}
                             # jsonArray = {"id": str(filename_id), "limit": time}
                         authFileList.append(jsonArray)
@@ -874,7 +875,7 @@ def postFileList(request):
                     if (result ==1):
                         continue
                     filename = "_fake_"+hash_code(str(datetime.datetime.now()))
-                    File.objects.create(filename=filename,group=arrayIntochar(group),createDate=datetime.datetime.now())
+                    File.objects.create(filename=filename,group=arrayIntochar(group),createDate=datetime.datetime.now(),type="folder")
                     #更新权限表的问题
                     filename_id = File.objects.all().order_by('-id')[0].id
                     print(filename_id)
