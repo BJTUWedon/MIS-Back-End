@@ -13,6 +13,7 @@ import subprocess
 import time
 import pexpect
 from django.core.files.storage import FileSystemStorage
+from PyPDF2 import PdfFileWriter, PdfFileReader
 
 # Create your views here.
 
@@ -114,6 +115,7 @@ def register(request):
             if same_name_user:  # 用户名唯一
                 Data = '用户已经存在，请重新选择用户名！'
                 success = False
+                return JsonResponse({"success": success, "data": Data})
                 return JsonResponse({"success": success, "data": Data})
             User.objects.create(username=username, password=hash_code(password), email=email, createDate=datetime.datetime.now())
             message = "注册成功"
@@ -451,6 +453,7 @@ def getFileList(request):
             tokenInfo = Token.objects.get(Token=token)
             userid = tokenInfo.username_id
             Userinfo = User.objects.get(id=userid)
+            creator = Userinfo.username
             isManager = Userinfo.isManager
             Data = []
             if(isManager==False):
@@ -466,10 +469,10 @@ def getFileList(request):
                         createDate = file.createDate
                         if (filename[0:6] == "_fake_"):
                             info = {"id": filename, "title": filename, "content": content, "type": type,
-                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":"wedon"}
+                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":creator}
                         else:
                             info = {"id": str(id), "title": filename, "content": content, "type": type,
-                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":"wedon"}
+                                    "createDate": createDate, "group": charIntoarray(file.group),"creator":creator}
                         # info = {"id":id, "title":filename, "content":content,"type":type,"createDate":createDate,"group":[]}
                         Data.append(info)
             else:
@@ -528,7 +531,7 @@ def postFile(request):
             content = json.loads(request.body)['content']
             authUserList = json.loads(request.body)['authUserList']#API需要新增time
             print(authUserList)
-            if id == -1:
+            if id == "-1":
                 File.objects.create(type=type,filename=title, content=content,createDate=datetime.datetime.now())
                 lastFile = File.objects.order_by('createDate')[0:1].get()
                 filename_id = lastFile.id#如果重复上传 会出BUG
@@ -564,9 +567,8 @@ def uploadFile(request):
         Data = []
         try:
             success = True
-            print(1)
             id = request.POST.get('id')
-            print(2)
+            print(id)
             title = request.POST.get('title','')
             content = request.POST.get('content','')
             type = request.POST.get('type','')
@@ -577,9 +579,23 @@ def uploadFile(request):
             src = hash_code(name)+address #到时候修改成服务器的地址
             print(src)
             if id == "-1":
-                with open(src, 'wb')as f:
-                    for ffile in file_obj.chunks():
-                        f.write(ffile)
+                if address == '.pdf': #切片操作
+                    with open(src, 'wb')as f:
+                        for ffile in file_obj.chunks():
+                            f.write(ffile)
+                    inputpdf = PdfFileReader(open(src, "rb"))
+                    output = PdfFileWriter()
+                    for i in range(inputpdf.numPages):
+                        output.addPage(inputpdf.getPage(i))
+                        pagesrc = src+"-page%s.pdf" % (i+1)
+                        print(pagesrc)
+                        with open(pagesrc, "wb") as outputStream: #页码
+                            output.write(outputStream)
+                else:
+                    print('no')
+                    with open(src, 'wb')as f:
+                        for ffile in file_obj.chunks():
+                            f.write(ffile)
                 if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff':
                     convert_video(src,hash_code(name)+'.mp4')
                     # time.sleep(5)
@@ -594,9 +610,17 @@ def uploadFile(request):
                 print(id)
                 Data = {"title": title, "id": str(id), "type":type}
             else:
-                with open(src, 'wb')as f:
-                    for ffile in file_obj.chunks():
-                        f.write(ffile)
+                if address == '.pdf': #切片操作
+                    inputpdf = PdfFileReader(open(src, "wb"))
+                    for i in range(inputpdf.numPages):
+                        output = PdfFileWriter()
+                        output.addPage(inputpdf.getPage(i))
+                        with open(src+"-page%s.pdf" % i, "wb") as outputStream: #页码
+                            output.write(outputStream)
+                else:
+                    with open(src, 'wb')as f:
+                        for ffile in file_obj.chunks():
+                            f.write(ffile)
                 if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff' or address == '.asf':
                     convert_video(src,hash_code(name)+'.mp4')
                     # time.sleep(5)
@@ -635,26 +659,43 @@ def postUser(request):
                 username_id = User.objects.all()[0].id
                 if isinstance(authFileList, Iterable) == True:
                     for authlist in authFileList:
-                        File_User.objects.create(username_id=username_id,filename_id=authlist['id'], time=authlist['limit'])
+                        if authlist['id'][0:6]=="_fake_":
+                            fakeid = File.objects.get(filename=authlist['id']).id
+                            File_User.objects.create(username_id=username_id, filename_id=fakeid,time=authlist['limit'])
+                        else:
+                            File_User.objects.create(username_id=username_id,filename_id=authlist['id'], time=authlist['limit'])
                 else:
                     File_User.objects.create(username_id=username_id, filename_id=authFileList['id'],time=authFileList['limit'])
-                fakeFileInfo = FIle.objects.filter(filename__contains= "fake")
-                for fakeinfo in fakeFileInfo:
-                    File_User.objects.create(username_id=username_id,filename_id=fakeinfo[id]) #创建文件夹权限表
+                # fakeFileInfo = FIle.objects.filter(filename__contains='fake')
+                # for fakeinfo in fakeFileInfo:
+                #     File_User.objects.create(username_id=username_id,filename_id=fakeinfo[id]) #创建文件夹权限表
             else:
                 if password:
                     User.objects.filter(id=id).update(username=username, email=email, password=hash_code(password),createDate=datetime.datetime.now(),authTime=limit)
                 else:
                     User.objects.filter(id=id).update(username=username, email=email,createDate=datetime.datetime.now(),authTime=limit)
                     # ,authtime=authtime
-                File_User.objects.filter(username_id=id).delete()
+
+                for authFile in authFileList:
+                    if authFile['id'][0:6] == "_fake_":
+                        filename_id = File.objects.get(filename=authFile['id']).id
+                        File_User.objects.filter(username_id=id, filename_id=filename_id).delete()
+                        # fakeid = File.objects.get(filename=authlist['id']).id
+                        # File_User.objects.create(username_id=username_id, filename_id=fakeid, time=authlist['limit'])
+                fakefileinfo = File.objects.filter(filename__contains='fake')
+                fakeinfolist=[]
+                for fakefile in fakefileinfo:
+                    fakefileid=fakefile.id
+                    fakeinfolist.append(fakefileid)
+                File_User.objects.filter(username_id=id).exclude(filename_id__in=fakeinfolist).delete()
                 if isinstance(authFileList, Iterable) == True:
                     for authlist in authFileList:
                         if (authlist['id'][0:6]=="_fake_"):
-                            filename_id = File.objects.filter(filename=authlist['id']).id
+                            filename_id = File.objects.get(filename=authlist['id']).id
                             print(filename_id)
                             File_User.objects.create(username_id=id, filename_id=filename_id, time=authlist['limit'])
-                        File_User.objects.create(username_id=id, filename_id=authlist['id'], time=authlist['limit'])
+                        else:
+                            File_User.objects.create(username_id=id, filename_id=authlist['id'], time=authlist['limit'])
                 else:
                     File_User.objects.create(username_id=id, filename_id=authFileList['id'], time=authFileList['limit'])
         except Exception as e:
@@ -673,43 +714,41 @@ def getUser(request):
             createDate = userInfo.createDate
             authFileList = []
             FileList = File_User.objects.filter(username_id=id)
-            try:
-                print(1)
-                if isinstance(FileList, Iterable) == True:
-                    for authlist in FileList:
-                        filename_id = authlist.filename_id
-                        time = authlist.time
-                        if authlist.time is not None:
-                            print("xixiix")
-                            jsonArray = {"id": str(filename_id), "limit": float(time)}
+
+            print(1)
+            if isinstance(FileList, Iterable) == True:
+                for authlist in FileList:
+                    filename_id = authlist.filename_id
+                    time = authlist.time
+                    fakename = File.objects.get(id=filename_id).filename
+                    if fakename[0:6]=="_fake_":
+                        if time is not None:
+                            jsonArray = {"id": fakename, "limit": float(time)}
                         else:
-                            print("hhaha")
-
-                            jsonArray = {
-                                "id": str("_fake_44b1b64be57eb0cab43ed017999703d57322d4674c8d132aab9a93ffbf54506e"),
-                                "limit": time}
-                            # jsonArray = {"id": str(filename_id), "limit": time}
-                        authFileList.append(jsonArray)
-                        print(3)
-                        Data = {"username": username, "email": email, "createDate": createDate,
-                                "authTime": userInfo.authTime, "authFileList": authFileList}
-                else:
-                    filename_id = FileList.filename_id
-                    time = FileList.time
-                    if time is not None:
-                        print("xixiix")
-                        authFileList = {"id": str(filename_id), "limit": float(time)}
+                            jsonArray = {"id": fakename, "limit": time}
                     else:
-                        print("hhaha")
-                        authFileList = {"id": str(filename_id), "limit": time}
-
-                    Data = {"username":username,"email":email,"createDate":createDate,"authTime":userInfo.authTime,"authFileList":authFileList}
-                    print(4)
-                return JsonResponse({"success": success, "data": Data})
-            except:
-                Data = {"username": username, "email": email, "createDate": createDate, "limit": userInfo.authTime,"authFileList": authFileList}
-                print(2)
-                return JsonResponse({"success": success, "data": Data})
+                        jsonArray = {"id": str(filename_id), "limit": float(time)}
+                    authFileList.append(jsonArray)
+                    print(3)
+                Data = {"username": username, "email": email, "createDate": createDate,
+                                "limit": userInfo.authTime, "authFileList": authFileList}
+            else:
+                filename_id = FileList.filename_id
+                time = FileList.time
+                fakename = File.objects.get(id=filename_id).filename
+                if fakename[0:6] == "_fake_":
+                    jsonArray = {"id": fakename, "limit": float(time)}
+                else:
+                    jsonArray = {"id": str(filename_id), "limit": float(time)}
+                authFileList.append(jsonArray)
+                Data = {"username":username,"email":email,"createDate":createDate,"limit":userInfo.authTime,"authFileList":authFileList}
+                print(4)
+            print(5)
+            return JsonResponse({"success": success, "data": Data})
+            # except:
+            #     Data = {"username": username, "email": email, "createDate": createDate, "limit": userInfo.authTime,"authFileList": authFileList}
+            #     print(2)
+            #     return JsonResponse({"success": success, "data": Data})
         except Exception as e:
             success = False
             Data = str(e)
@@ -740,29 +779,50 @@ def getFile(request):
                 except:
                     return JsonResponse({"success": False, "data": "You can`t open this file"})
                 #判断父文件夹有无全新啊
-                thisUserFile = File_User.objects.get(filename_id=id, username_id=userid) #取出文件
+                thisUserFile = File.objects.get(id=id) #取出文件
                 thisGroup = thisUserFile.group
+                thisFakeFile = File.objects.get(filename__contains="fake", group=thisGroup)
+                fakeid = thisFakeFile.id
+                limit = File_User.objects.get(filename_id=fakeid, username_id=userid).time
                 if thisGroup == "": #根目录，那就自身权限
-                    limit = thisUserFile.time
-                thisFakeFile = File_User.objects.get(filename__contains="fake", group=thisGroup)
-                if thisFakeFile.group == "":
-                    limit = thisUserFile.time
+                    limit = File_User.objects.get(filename_id=id,username_id=userid).time
+                elif limit is None:
+                    limit = File_User.objects.get(filename_id=id,username_id=userid).time
                 else:
-                    limit = thisFakeFile.time
+                    fakeid = thisFakeFile.id
+                    limit = File_User.objects.get(filename_id=fakeid,username_id=userid).time
                 try:
-                    Fileinfo = File_User.objects.filter(filename_id=id)
-                    if isinstance(Fileinfo, Iterable) == True:
-                        for authlist in Fileinfo:
-                            username_id = authlist.username_id
-                            time = authlist.time
-                            jsonArray = {"id":str(username_id), "limit":float(time)}
-                            authUserList.append(jsonArray)
-                            print(1)
+                    if type=="pdf":
+                        Fileinfo = File_User.objects.filter(filename_id=id)
+                        if isinstance(Fileinfo, Iterable) == True:
+                            for authlist in Fileinfo:
+                                username_id = authlist.username_id
+                                time = authlist.time
+                                timepage = math.ceil(time)  # 向上取证
+                                page = '-page' + str(timepage)
+                                jsonArray = {"id": str(username_id), "limit": float(time)}
+                                authUserList.append(jsonArray)
+                                src = src + page
+                                print(src)
+                        else:
+                            print(2)
+                            username_id = Fileinfo.username_id
+                            time = Fileinfo.time
+                            authUserList = [{"id": str(username_id), "limit": float(time)}]
                     else:
-                        print(2)
-                        username_id = Fileinfo.username_id
-                        time = Fileinfo.time
-                        authUserList = [{"id": str(username_id), "limit":float(time)}]
+                        Fileinfo = File_User.objects.filter(filename_id=id)
+                        if isinstance(Fileinfo, Iterable) == True:
+                            for authlist in Fileinfo:
+                                username_id = authlist.username_id
+                                time = authlist.time
+                                jsonArray = {"id":str(username_id), "limit":float(time)}
+                                authUserList.append(jsonArray)
+                                print(1)
+                        else:
+                            print(2)
+                            username_id = Fileinfo.username_id
+                            time = Fileinfo.time
+                            authUserList = [{"id": str(username_id), "limit":float(time)}]
                     Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
                 except Exception as e:
                     # print(3)
@@ -830,6 +890,7 @@ def logout(request):
         Data=[]
         try:
             success = True
+
             resp = JsonResponse({"success": success, "data": Data}, safe=False)
             resp.delete_cookie('token')
             resp.delete_cookie('isManager')
@@ -889,3 +950,21 @@ def postFileList(request):
             success = False
             Data = str(e)
         return JsonResponse({"success": success, "Data":Data})
+
+def deleteFolder(request):
+    if request.method =="POST":
+        Data=[]
+        try:
+            success = True
+            infos = json.loads(request.body)
+            for info in infos:
+                id = info['id']
+                print(id)
+                file = File.objects.get(filename=id)
+                File_User.objects.filter(filename_id=file.id).delete()
+                File.objects.filter(filename=id).delete()
+        except Exception as e:
+            success = False
+            Data = str(e)
+        return JsonResponse({"success": success, "data": Data})
+
