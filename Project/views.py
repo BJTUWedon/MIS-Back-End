@@ -14,7 +14,8 @@ import time
 import pexpect
 from django.core.files.storage import FileSystemStorage
 from PyPDF2 import PdfFileWriter, PdfFileReader
-
+import math
+import glob
 # Create your views here.
 
 globalUserId = 0
@@ -793,13 +794,13 @@ def getFile(request):
                     limit = File_User.objects.get(filename_id=fakeid,username_id=userid).time
                 try:
                     if type=="pdf":
-                        Fileinfo = File_User.objects.filter(filename_id=id)
+                        Fileinfo = File_User.objects.filter(filename_id=id,username_id=userid)
                         if isinstance(Fileinfo, Iterable) == True:
                             for authlist in Fileinfo:
                                 username_id = authlist.username_id
                                 time = authlist.time
                                 timepage = math.ceil(time)  # 向上取证
-                                page = '-page' + str(timepage)
+                                page = '-page' + str(int(timepage))+'.pdf'
                                 jsonArray = {"id": str(username_id), "limit": float(time)}
                                 authUserList.append(jsonArray)
                                 src = src + page
@@ -828,9 +829,10 @@ def getFile(request):
                     # print(3)
                     # success = False
                     # Data = str(e)
+                    print("error")
                     time = FileList.time
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                            "authUserList": authUserList,"limit":float(limit)}
+                            "authUserList": authUserList,"limit":float(time)}
             if (User.objects.get(id=userid).isManager == True):
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
@@ -878,12 +880,17 @@ def deleteFile(request):
             id = json.loads(request.body)['id']
             file = File.objects.get(id=id)
             list = file.src.split("/")
+            if file.type == "pdf":
+                filenames = glob.glob(list[3]+'*')
+                for filename in filenames: os.remove(filename)
+            else:
+                os.remove(list[3])
             File.objects.filter(id=id).delete()
-            os.remove(list[3])
         except Exception as e:
             success = False
             Data = str(e)
         return JsonResponse({"success": success, "data": Data})
+
 
 def logout(request):
     if request.method =="GET":
