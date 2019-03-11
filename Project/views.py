@@ -765,8 +765,8 @@ def getFile(request):
             content = fileInfo.content
             createDate = fileInfo.createDate
             type = fileInfo.type
-            print(type)
             src = fileInfo.src
+            print(type)
             authUserList = []
             token = request.COOKIES["token"]
             # print(token)
@@ -785,6 +785,10 @@ def getFile(request):
                 thisFakeFile = File.objects.get(filename__contains="fake", group=thisGroup)
                 fakeid = thisFakeFile.id
                 limit = File_User.objects.get(filename_id=fakeid, username_id=userid).time
+                if type == "pdf":
+                    timepage = math.ceil(time)
+                    page = '-page' + str(int(timepage)) + '.pdf'
+                    src = src + page
                 if thisGroup == "": #根目录，那就自身权限
                     limit = File_User.objects.get(filename_id=id,username_id=userid).time
                 elif limit is None:
@@ -793,38 +797,38 @@ def getFile(request):
                     fakeid = thisFakeFile.id
                     limit = File_User.objects.get(filename_id=fakeid,username_id=userid).time
                 try:
-                    if type=="pdf":
-                        Fileinfo = File_User.objects.filter(filename_id=id,username_id=userid)
-                        if isinstance(Fileinfo, Iterable) == True:
-                            for authlist in Fileinfo:
-                                username_id = authlist.username_id
-                                time = authlist.time
-                                timepage = math.ceil(time)  # 向上取证
-                                page = '-page' + str(int(timepage))+'.pdf'
-                                jsonArray = {"id": str(username_id), "limit": float(time)}
-                                authUserList.append(jsonArray)
-                                src = src + page
-                                print(src)
-                        else:
-                            print(2)
-                            username_id = Fileinfo.username_id
-                            time = Fileinfo.time
-                            authUserList = [{"id": str(username_id), "limit": float(time)}]
+                    # if type=="pdf":
+                    #     Fileinfo = File_User.objects.filter(filename_id=id)
+                    #     if isinstance(Fileinfo, Iterable) == True:
+                    #         for authlist in Fileinfo:
+                    #             username_id = authlist.username_id
+                    #             time = authlist.time
+                    #             timepage = math.ceil(time)  # 向上取证
+                    #             page = '-page' + str(int(timepage))+'.pdf'
+                    #             jsonArray = {"id": str(username_id), "limit": float(time)}
+                    #             authUserList.append(jsonArray)
+                    #             src = src + page
+                    #             print(src)
+                    #     else:
+                    #         print(2)
+                    #         username_id = Fileinfo.username_id
+                    #         time = Fileinfo.time
+                    #         authUserList = [{"id": str(username_id), "limit": float(time)}]
+
+                    Fileinfo = File_User.objects.filter(filename_id=id)
+                    if isinstance(Fileinfo, Iterable) == True:
+                        for authlist in Fileinfo:
+                            username_id = authlist.username_id
+                            time = authlist.time
+                            jsonArray = {"id":str(username_id), "limit":float(time)}
+                            authUserList.append(jsonArray)
+                            print(1)
                     else:
-                        Fileinfo = File_User.objects.filter(filename_id=id)
-                        if isinstance(Fileinfo, Iterable) == True:
-                            for authlist in Fileinfo:
-                                username_id = authlist.username_id
-                                time = authlist.time
-                                jsonArray = {"id":str(username_id), "limit":float(time)}
-                                authUserList.append(jsonArray)
-                                print(1)
-                        else:
-                            print(2)
-                            username_id = Fileinfo.username_id
-                            time = Fileinfo.time
-                            authUserList = [{"id": str(username_id), "limit":float(time)}]
-                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
+                        print(2)
+                        username_id = Fileinfo.username_id
+                        time = Fileinfo.time
+                        authUserList = [{"id": str(username_id), "limit":float(time)}]
+                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":math.ceil(float(limit))}
                 except Exception as e:
                     # print(3)
                     # success = False
@@ -832,7 +836,7 @@ def getFile(request):
                     print("error")
                     time = FileList.time
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                            "authUserList": authUserList,"limit":float(time)}
+                            "authUserList": authUserList,"limit":math.ceil(float(limit))}
             if (User.objects.get(id=userid).isManager == True):
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
@@ -854,7 +858,7 @@ def getFile(request):
                     except:
                         limit = 1
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
-                                "type": type, "authUserList": authUserList, "limit": float(limit)}
+                                "type": type, "authUserList": authUserList, "limit": math.ceil(float(limit))}
         except Exception as e:
             success = False
             Data = str(e)
