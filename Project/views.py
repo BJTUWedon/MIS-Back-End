@@ -841,6 +841,8 @@ def getFile(request):
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
                         limit = thisUserFile.time
+                    except:
+                        limit = 1
                         print(limit)
                         Fileinfo = File_User.objects.filter(filename_id=id)
                         if isinstance(Fileinfo, Iterable) == True:
@@ -855,8 +857,6 @@ def getFile(request):
                             username_id = Fileinfo.username_id
                             time = Fileinfo.time
                             authUserList = [{"id": str(username_id), "limit": float(time)}]
-                    except:
-                        limit = 1
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
                                 "type": type, "authUserList": authUserList, "limit": math.ceil(float(limit))}
         except Exception as e:
