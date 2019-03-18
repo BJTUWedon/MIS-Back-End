@@ -13,9 +13,12 @@ import subprocess
 import time
 import pexpect
 from django.core.files.storage import FileSystemStorage
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from wand.image import Image
+from wand.color import Color
+from PyPDF2 import PdfFileReader, PdfFileWriter
 import math
 import glob
+import io
 # Create your views here.
 
 globalUserId = 0
@@ -580,7 +583,7 @@ def uploadFile(request):
             src = hash_code(name)+address #到时候修改成服务器的地址
             print(src)
             if id == "-1":
-                if address == '.pdf': #切片操作
+                if address == '.pdf'or'.PDF': #切片操作
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
                             f.write(ffile)
@@ -588,16 +591,36 @@ def uploadFile(request):
                     output = PdfFileWriter()
                     for i in range(inputpdf.numPages):
                         output.addPage(inputpdf.getPage(i))
-                        pagesrc = src+"-page%s.pdf" % (i+1)
-                        print(pagesrc)
-                        with open(pagesrc, "wb") as outputStream: #页码
-                            output.write(outputStream)
+                    pdf_bytes = io.BytesIO()
+                    output.write(pdf_bytes)
+                    pdf_bytes.seek(0)
+                    img = Image(file=pdf_bytes, resolution=300)
+                    img.format = 'JPEG'
+                    img.compression_quality = 92
+                    img.background_color = Color("white")
+                    img.save(filename=src + "-page.jpeg")
+                    # img.save(filename=src + "-page%s.jpeg" % (i + 1))
+                    img.destroy()
+                    # for i in range(inputpdf.numPages):
+                    #     output.addPage(inputpdf.getPage(i))
+                        # pagesrc = src+"-page%s.pdf" % (i+1)
+                        # print(pagesrc)
+                        # with open(pagesrc, "wb") as outputStream: #页码
+                        #     output.write(outputStream)
+
+                    # for img in sorted(glob.glob(src+'*'))
+                    #     imgdoc = fitz.open(img)
+                    #     pdfbytes = imgdoc.convertToPDF()
+                    #     imgpdf = fitz.open("pdf", pdfbytes)
+                    #     doc.insertPDF(imgpdf)
+                    # doc.save(".pdf")
+                    # doc.close()
                 else:
                     print('no')
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
                             f.write(ffile)
-                if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff':
+                if address == '.avi' or'.AVI'or '.asf'or'.ASF' or '.wav'or'.WAV' or '.flv'or'.FLV' or '.siff'or'.SIFF':
                     convert_video(src,hash_code(name)+'.mp4')
                     # time.sleep(5)
                     os.remove(src)
@@ -782,20 +805,20 @@ def getFile(request):
                 #判断父文件夹有无全新啊
                 thisUserFile = File.objects.get(id=id) #取出文件
                 thisGroup = thisUserFile.group
-                thisFakeFile = File.objects.get(filename__contains="fake", group=thisGroup)
-                fakeid = thisFakeFile.id
-                limit = File_User.objects.get(filename_id=fakeid, username_id=userid).time
-                if type == "pdf":
-                    timepage = math.ceil(time)
-                    page = '-page' + str(int(timepage)) + '.pdf'
-                    src = src + page
-                if thisGroup == "": #根目录，那就自身权限
-                    limit = File_User.objects.get(filename_id=id,username_id=userid).time
-                elif limit is None:
-                    limit = File_User.objects.get(filename_id=id,username_id=userid).time
-                else:
+                try:
+                    thisFakeFile = File.objects.get(filename__contains='fake', group=thisGroup)
                     fakeid = thisFakeFile.id
-                    limit = File_User.objects.get(filename_id=fakeid,username_id=userid).time
+                    limit = File_User.objects.get(filename_id=fakeid, username_id=userid).time
+                except:
+                    limit = File_User.objects.get(filename_id=id,username_id=userid).time
+                if limit is None:
+                    limit = File_User.objects.get(filename_id=id, username_id=userid).time
+                if type == "pdf":
+                    list = src.split("/")
+                    totalPage = PdfFileReader(open(list[3], "rb")).numPages
+                    timepage = int(math.ceil(float(limit)*totalPage))
+                    page = '-page' + str(timepage) + '.pdf'
+                    src = src + page
                 try:
                     # if type=="pdf":
                     #     Fileinfo = File_User.objects.filter(filename_id=id)
@@ -884,12 +907,12 @@ def deleteFile(request):
             id = json.loads(request.body)['id']
             file = File.objects.get(id=id)
             list = file.src.split("/")
+            File.objects.filter(id=id).delete()
             if file.type == "pdf":
                 filenames = glob.glob(list[3]+'*')
                 for filename in filenames: os.remove(filename)
             else:
                 os.remove(list[3])
-            File.objects.filter(id=id).delete()
         except Exception as e:
             success = False
             Data = str(e)
