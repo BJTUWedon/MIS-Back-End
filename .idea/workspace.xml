@@ -269,7 +269,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1055" />
     <option name="y" value="187" />
     <option name="width" value="1040" />
@@ -425,9 +425,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django server.OPM_Project" />
-      <item itemvalue="Python.COR" />
       <item itemvalue="Python.1" />
+      <item itemvalue="Python.COR" />
+      <item itemvalue="Django server.OPM_Project" />
     </list>
     <recent_temporary>
       <list>
