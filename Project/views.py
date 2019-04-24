@@ -589,24 +589,25 @@ def uploadFile(request):
                             f.write(ffile)
                     inputpdf = PdfFileReader(open(src, "rb"))
                     output = PdfFileWriter()
-                    for i in range(inputpdf.numPages):
-                        output.addPage(inputpdf.getPage(i))
-                    pdf_bytes = io.BytesIO()
-                    output.write(pdf_bytes)
-                    pdf_bytes.seek(0)
-                    img = Image(file=pdf_bytes, resolution=300)
-                    img.format = 'JPEG'
-                    img.compression_quality = 92
-                    img.background_color = Color("white")
-                    img.save(filename=src + "-page.jpeg")
-                    # img.save(filename=src + "-page%s.jpeg" % (i + 1))
-                    img.destroy()
                     # for i in range(inputpdf.numPages):
                     #     output.addPage(inputpdf.getPage(i))
-                        # pagesrc = src+"-page%s.pdf" % (i+1)
-                        # print(pagesrc)
-                        # with open(pagesrc, "wb") as outputStream: #页码
-                        #     output.write(outputStream)
+                    # pdf_bytes = io.BytesIO()
+                    # output.write(pdf_bytes)
+                    # pdf_bytes.seek(0)
+                    # img = Image(file=pdf_bytes, resolution=300)
+                    # img.format = 'JPEG'
+                    # img.compression_quality = 92
+                    # img.background_color = Color("white")
+                    # img.save(filename=src + "-page.jpeg")
+                    # # img.save(filename=src + "-page%s.jpeg" % (i + 1))
+                    # img.destroy()
+                    for i in range(inputpdf.numPages):
+                        output.addPage(inputpdf.getPage(i))
+                        # output.encrypt(user_pwd="wyd",owner_pwd="None",use_128bit=True,allow_printing=False, allow_commenting=False,overwrite_permission=False)
+                        pagesrc = src+"-page%s.pdf" % (i+1)
+                        print(pagesrc)
+                        with open(pagesrc, "wb") as outputStream: #页码
+                            output.write(outputStream)
 
                     # for img in sorted(glob.glob(src+'*'))
                     #     imgdoc = fitz.open(img)
@@ -1002,4 +1003,3 @@ def deleteFolder(request):
             success = False
             Data = str(e)
         return JsonResponse({"success": success, "data": Data})
-
