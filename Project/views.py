@@ -581,14 +581,16 @@ def uploadFile(request):
             name = os.path.splitext(file_obj.name)[0]
             address = os.path.splitext(file_obj.name)[-1]
             src = hash_code(name)+address #到时候修改成服务器的地址
+            print("FIletype:"+address)
             print(src)
             if id == "-1":
-                if address == '.pdf'or'.PDF': #切片操作
+                if address == '.pdf' or address == '.PDF': #切片操作
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
                             f.write(ffile)
                     inputpdf = PdfFileReader(open(src, "rb"))
                     output = PdfFileWriter()
+                    print("1")
                     # for i in range(inputpdf.numPages):
                     #     output.addPage(inputpdf.getPage(i))
                     # pdf_bytes = io.BytesIO()
@@ -618,16 +620,21 @@ def uploadFile(request):
                     # doc.save(".pdf")
                     # doc.close()
                 else:
-                    print('no')
+                    print('no video')
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
                             f.write(ffile)
-                    if address == '.avi' or'.AVI'or '.asf'or'.ASF' or '.wav'or'.WAV' or '.flv'or'.FLV' or '.siff'or'.SIFF':
+                    if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
+                        print("filetype: video")
                         convert_video(src,hash_code(name)+'.mp4')
                         # time.sleep(5)
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
                         File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
+                    if address =='.png':
+                        print("filetype:img")
+                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
+
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
