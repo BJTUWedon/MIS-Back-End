@@ -631,7 +631,7 @@ def uploadFile(request):
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
                         File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
-                    if address =='.png':
+                    else:#不准确
                         print("filetype:img")
                         File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
 
@@ -658,6 +658,9 @@ def uploadFile(request):
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
                         File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
+                    else:#不准确
+                        print("filetype:img")
+                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
                 Data = {"title": title, "id": str(id), "type": type}
         except Exception as e:
             success = False
