@@ -652,15 +652,18 @@ def uploadFile(request):
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
                             f.write(ffile)
-                    if address == '.avi' or address == '.asf' or address == '.wav' or address == '.flv' or address == '.siff' or address == '.asf':
+                    if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
                         convert_video(src,hash_code(name)+'.mp4')
                         # time.sleep(5)
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
                         File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
-                    else:#不准确
+                    if address == '.jpg' or address == '.JPG' or address == '.png' or address == '.PNG' or address == '.gif' or address == '.GIF':#不准确
                         print("filetype:img")
                         File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
+                    else:
+                        print("error")
+                        success = False
                 Data = {"title": title, "id": str(id), "type": type}
         except Exception as e:
             success = False
