@@ -853,6 +853,8 @@ def getFile(request):
                         time = Fileinfo.time
                         authUserList = [{"id": str(username_id), "limit":float(time)}]
                     Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":math.ceil(float(limit))}
+                    print("普通账户")
+                    print(limit)
                 except Exception as e:
                     # print(3)
                     # success = False
@@ -884,6 +886,8 @@ def getFile(request):
                         authUserList = [{"id": str(username_id), "limit": float(time)}]
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
                                 "type": type, "authUserList": authUserList, "limit": math.ceil(float(limit))}
+                    print("管理员账户")
+                    print(limit)
         except Exception as e:
             success = False
             Data = str(e)
