@@ -695,11 +695,11 @@ def postUser(request):
                     for authlist in authFileList:
                         if authlist['id'][0:6]=="_fake_":
                             fakeid = File.objects.get(filename=authlist['id']).id
-                            File_User.objects.create(username_id=username_id, filename_id=fakeid,time=authlist['limit'],timeLimit=authlist['timeLimit'])
+                            File_User.objects.create(auth=1,username_id=username_id, filename_id=fakeid,time=authlist['limit'],timeLimit=authlist['timeLimit'])
                         else:
-                            File_User.objects.create(username_id=username_id,filename_id=authlist['id'], time=authlist['limit'],timeLimit=authlist['timeLimit'])
+                            File_User.objects.create(auth=1,username_id=username_id,filename_id=authlist['id'], time=authlist['limit'],timeLimit=authlist['timeLimit'])
                 else:
-                    File_User.objects.create(username_id=username_id, filename_id=authFileList['id'],time=authFileList['limit'],timeLimit=authFileList['timeLimit'])
+                    File_User.objects.create(auth=1,username_id=username_id, filename_id=authFileList['id'],time=authFileList['limit'],timeLimit=authFileList['timeLimit'])
                 # fakeFileInfo = FIle.objects.filter(filename__contains='fake')
                 # for fakeinfo in fakeFileInfo:
                 #     File_User.objects.create(username_id=username_id,filename_id=fakeinfo[id]) #创建文件夹权限表
@@ -727,18 +727,15 @@ def postUser(request):
                         if (authlist['id'][0:6]=="_fake_"):
                             filename_id = File.objects.get(filename=authlist['id']).id
                             print(filename_id)
-                            File_User.objects.create(username_id=id, filename_id=filename_id, time=authlist['limit'],timeLimit=authlist['timeLimit'])
+                            File_User.objects.create(auth=1,username_id=id, filename_id=filename_id, time=authlist['limit'],timeLimit=authlist['timeLimit'])
                         else:
-                            File_User.objects.create(username_id=id, filename_id=authlist['id'], time=authlist['limit'],timeLimit=authlist['timeLimit'])
+                            File_User.objects.create(auth=1,username_id=id, filename_id=authlist['id'], time=authlist['limit'],timeLimit=authlist['timeLimit'])
                 else:
-                    File_User.objects.create(username_id=id, filename_id=authFileList['id'], time=authFileList['limit'],timeLimit=authFileList['timeLimit'])
+                    File_User.objects.create(auth=1,username_id=id, filename_id=authFileList['id'], time=authFileList['limit'],timeLimit=authFileList['timeLimit'])
         except Exception as e:
             success = False
             Data = str(e)
         #把auth权限还原成1
-        Fileinfo = File_User.objects.filter(username_id=id)
-        for file in Fileinfo:
-            file.auth = 1
         return JsonResponse({"success": success, "data": Data})
 
 def getUser(request):
@@ -811,6 +808,7 @@ def getFile(request):
             # print(token)
             tokenInfo = Token.objects.get(Token=token)
             userid = tokenInfo.username_id
+            timeLimitdd = File_User.objects.get(username_id=userid,filename_id=id).timeLimit
 
             if (User.objects.get(id=userid).isManager == False):
                 #判断有无权限
@@ -873,7 +871,7 @@ def getFile(request):
                         time = Fileinfo.time
                         timeLimit = FileList.timeLimit
                         authUserList = [{"id": str(username_id), "limit":float(time),"timeLimit":int(timeLimit)}]
-                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit),"timeLimit":int(timeLimit)}
+                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit),"timeLimit":int(timeLimitdd)}
                     print("普通账户")
                     print(limit)
                 except Exception as e:
@@ -883,7 +881,7 @@ def getFile(request):
                     print("error")
                     time = FileList.time
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
-                            "authUserList": authUserList,"limit":math.ceil(float(limit)),"timeLimit":int(timeLimit)}
+                            "authUserList": authUserList,"limit":math.ceil(float(limit)),"timeLimit":int(timeLimitdd)}
             if (User.objects.get(id=userid).isManager == True):
                     try:
                         thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
@@ -910,7 +908,7 @@ def getFile(request):
                         timeLimit = Fileinfo.timeLimit
                         authUserList = [{"id": str(username_id), "limit": float(time),"timeLimit":timeLimit}]
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,
-                                "type": type, "authUserList": authUserList, "limit": math.ceil(float(limit)),"timeLimit":int(timeLimit)}
+                                "type": type, "authUserList": authUserList, "limit": math.ceil(float(limit)),"timeLimit":999999}
                     print("管理员账户")
                     print(limit)
         except Exception as e:
