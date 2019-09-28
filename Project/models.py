@@ -40,6 +40,7 @@ class File_User(models.Model):
     filename = models.ForeignKey(File)
     username = models.ForeignKey(User)
     time = models.DecimalField(max_digits=10,decimal_places=2,null=True)
+    timeLimit = models.IntegerField(default=0)
 
 class Token(models.Model):
     Token = models.CharField(max_length=250)
