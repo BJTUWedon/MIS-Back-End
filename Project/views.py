@@ -868,7 +868,7 @@ def getFile(request):
                         time = Fileinfo.time
                         timeLimit = FileList.timeLimit
                         authUserList = [{"id": str(username_id), "limit":float(time),"timeLimit":int(timeLimit)}]
-                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit)}
+                    Data = {"id":str(id),"title":title,"content":content,"src":src,"createDate":createDate,"type":type,"authUserList":authUserList,"limit":float(limit),"timeLimit":int(timeLimit)}
                     print("普通账户")
                     print(limit)
                 except Exception as e:
