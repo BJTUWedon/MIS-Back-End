@@ -461,7 +461,7 @@ def getFileList(request):
             isManager = Userinfo.isManager
             Data = []
             if(isManager==False):
-                Fileinfo = File_User.objects.filter(username_id=userid).order_by('-filename_id')
+                Fileinfo = File_User.objects.filter(username_id=userid,auth=1).order_by('-filename_id')
                 if Fileinfo:
                     for a in Fileinfo:
                         id = a.filename_id
@@ -735,6 +735,10 @@ def postUser(request):
         except Exception as e:
             success = False
             Data = str(e)
+        #把auth权限还原成1
+        Fileinfo = File_User.objects.filter(username_id=id)
+        for file in Fileinfo:
+            file.auth = 1
         return JsonResponse({"success": success, "data": Data})
 
 def getUser(request):
@@ -815,6 +819,7 @@ def getFile(request):
                 except:
                     return JsonResponse({"success": False, "data": "You can`t open this file"})
                 #判断父文件夹有无全新啊
+                FileList.auth = 0
                 thisUserFile = File.objects.get(id=id) #取出文件
                 thisGroup = thisUserFile.group
                 try:
