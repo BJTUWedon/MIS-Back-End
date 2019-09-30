@@ -103,6 +103,7 @@ def login(request):
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
         resp.set_cookie('token', token, expires=expires*60*60*24)
         resp.set_cookie('isManager', user.isManager, expires=expires*60*60*24)
+        resp.set_cookie('visit_time', expires*60*60*24,expires=expires*60*60*24)
         if user.isManager == False and user.authTime != 999999:
             User.objects.filter(id=id).update(authTime=0)
         return resp
