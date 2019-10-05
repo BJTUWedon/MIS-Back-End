@@ -77,7 +77,7 @@ def login(request):
                         Token.objects.create(username_id=id,Token=token,createDate=timezone.now(),expires=expires)
                         global globalUserId
                         globalUserId = id
-                        Data = {"isManager": user.isManager, "token": token,"expires":expires}
+                        Data = {"isManager": user.isManager, "token": token, "expires":expires, "visit_time":expires*60*60*24}
                         # response = HttpResponse('ok')
                         # response.set_cookie(response,'ok','ok')
                         # print(token)
