@@ -815,10 +815,10 @@ def getFile(request):
             # print(token)
             tokenInfo = Token.objects.get(Token=token)
             userid = tokenInfo.username_id
-            timeLimitdd = File_User.objects.get(username_id=userid,filename_id=id).timeLimit
 
             if (User.objects.get(id=userid).isManager == False):
                 #判断有无权限
+                timeLimitdd = File_User.objects.get(username_id=userid, filename_id=id).timeLimit
                 try:
                     FileList = File_User.objects.get(username_id=userid, filename_id=id)
                 except:
@@ -890,15 +890,7 @@ def getFile(request):
                     Data = {"id": str(id), "title": title, "content": content, "src": src, "createDate": createDate,"type":type,
                             "authUserList": authUserList,"limit":math.ceil(float(limit)),"timeLimit":int(timeLimitdd)}
             if (User.objects.get(id=userid).isManager == True):
-                    try:
-                        thisUserFile = File_User.objects.get(filename_id=id, username_id=userid)
-                        limit = thisUserFile.time
-                        timeLimit = thisUserFile.timeLimit
-                        print('try1')
-                    except:
-                        limit = 1
-                        timeLimit = 9999999
-                        print(limit)
+                    limit = 1
                     Fileinfo = File_User.objects.filter(filename_id=id)
                     if isinstance(Fileinfo, Iterable) == True:
                         for authlist in Fileinfo:
