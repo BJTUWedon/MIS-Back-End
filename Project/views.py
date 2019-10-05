@@ -101,9 +101,9 @@ def login(request):
             token = '2'
             return JsonResponse({"success": success, "data": Data})
         resp = JsonResponse({"success":success,"data":Data}, safe=False)
-        resp.set_cookie('token', token, expires=expires*60*60*24)
-        resp.set_cookie('isManager', user.isManager, expires=expires*60*60*24)
-        resp.set_cookie('visit_time', expires*60*60*24,expires=expires*60*60*24)
+        resp.set_cookie('token', token)
+        resp.set_cookie('isManager', user.isManager)
+        resp.set_cookie('visit_time', expires*60*60*24)
         if user.isManager == False and user.authTime != 999999:
             User.objects.filter(id=id).update(authTime=0)
         return resp
@@ -760,9 +760,15 @@ def getUser(request):
                     fakename = File.objects.get(id=filename_id).filename
                     if fakename[0:6]=="_fake_":
                         if time is not None:
-                            jsonArray = {"id": fakename, "limit": float(time),"timeLimit":int(timeLimit)}
+                            if timeLimit is not None:
+                                jsonArray = {"id": fakename, "limit": float(time),"timeLimit":int(timeLimit)}
+                            else:
+                                jsonArray = {"id": fakename, "limit": float(time), "timeLimit": timeLimit}
                         else:
-                            jsonArray = {"id": fakename, "limit": time,"timeLimit":int(timeLimit)}
+                            if timeLimit is not None
+                                jsonArray = {"id": fakename, "limit": time,"timeLimit":int(timeLimit)}
+                            else:
+                                jsonArray = {"id": fakename, "limit": time, "timeLimit": timeLimit}
                     else:
                         jsonArray = {"id": str(filename_id), "limit": float(time),"timeLimit":int(timeLimit)}
                     authFileList.append(jsonArray)
