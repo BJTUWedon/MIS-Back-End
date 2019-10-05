@@ -765,7 +765,7 @@ def getUser(request):
                             else:
                                 jsonArray = {"id": fakename, "limit": float(time), "timeLimit": timeLimit}
                         else:
-                            if timeLimit is not None
+                            if timeLimit is not None:
                                 jsonArray = {"id": fakename, "limit": time,"timeLimit":int(timeLimit)}
                             else:
                                 jsonArray = {"id": fakename, "limit": time, "timeLimit": timeLimit}
