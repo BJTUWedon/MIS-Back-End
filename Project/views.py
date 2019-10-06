@@ -20,7 +20,7 @@ import math
 import glob
 import io
 # Create your views here.
-
+filesrc = r"http://lvmaozi.info:9999/"
 globalUserId = 0
 def convert_video(video_input, video_output):
     # cmds = ['ffmpeg', '-i', video_input, video_output]
@@ -611,7 +611,7 @@ def uploadFile(request):
                         print(pagesrc)
                         with open(pagesrc, "wb") as outputStream: #页码
                             output.write(outputStream)
-                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
 
                     # for img in sorted(glob.glob(src+'*'))
                     #     imgdoc = fitz.open(img)
@@ -631,10 +631,10 @@ def uploadFile(request):
                         # time.sleep(5)
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
-                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
+                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
                     else:#不准确
                         print("filetype:img")
-                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
+                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc+ src,group=group)
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
@@ -648,7 +648,7 @@ def uploadFile(request):
                         output.addPage(inputpdf.getPage(i))
                         with open(src+"-page%s.pdf" % i, "wb") as outputStream: #页码
                             output.write(outputStream)
-                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/"+src,group=group)
+                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=filesrc+src,group=group)
                 else:
                     with open(src, 'wb')as f:
                         for ffile in file_obj.chunks():
@@ -658,10 +658,10 @@ def uploadFile(request):
                         # time.sleep(5)
                         os.remove(src)
                         newsrc = hash_code(name)+'.mp4'
-                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=r"http://lvmaozi.info:9999/"+newsrc,group=group)#我认为下面还要返回id
+                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
                     if address == '.jpg' or address == '.JPG' or address == '.png' or address == '.PNG' or address == '.gif' or address == '.GIF':#不准确
                         print("filetype:img")
-                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=r"http://lvmaozi.info:9999/" + src,group=group)
+                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
                     else:
                         print("error")
                         success = False
