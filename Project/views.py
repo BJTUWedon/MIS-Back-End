@@ -585,86 +585,64 @@ def uploadFile(request):
             print("FIletype:"+address)
             print(src)
             if id == "-1":
-                if address == '.pdf' or address == '.PDF': #切片操作
-                    with open(src, 'wb')as f:
-                        for ffile in file_obj.chunks():
-                            f.write(ffile)
-                    inputpdf = PdfFileReader(open(src, "rb"))
-                    output = PdfFileWriter()
-                    print("1")
-                    # for i in range(inputpdf.numPages):
-                    #     output.addPage(inputpdf.getPage(i))
-                    # pdf_bytes = io.BytesIO()
-                    # output.write(pdf_bytes)
-                    # pdf_bytes.seek(0)
-                    # img = Image(file=pdf_bytes, resolution=300)
-                    # img.format = 'JPEG'
-                    # img.compression_quality = 92
-                    # img.background_color = Color("white")
-                    # img.save(filename=src + "-page.jpeg")
-                    # # img.save(filename=src + "-page%s.jpeg" % (i + 1))
-                    # img.destroy()
-                    for i in range(inputpdf.numPages):
-                        output.addPage(inputpdf.getPage(i))
-                        # output.encrypt(user_pwd="wyd",owner_pwd="None",use_128bit=True,allow_printing=False, allow_commenting=False,overwrite_permission=False)
-                        pagesrc = src+"-page%s.pdf" % (i+1)
-                        print(pagesrc)
-                        with open(pagesrc, "wb") as outputStream: #页码
-                            output.write(outputStream)
-                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
-
-                    # for img in sorted(glob.glob(src+'*'))
-                    #     imgdoc = fitz.open(img)
-                    #     pdfbytes = imgdoc.convertToPDF()
-                    #     imgpdf = fitz.open("pdf", pdfbytes)
-                    #     doc.insertPDF(imgpdf)
-                    # doc.save(".pdf")
-                    # doc.close()
-                else:
-                    print('no video')
-                    with open(src, 'wb')as f:
-                        for ffile in file_obj.chunks():
-                            f.write(ffile)
-                    if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
-                        print("filetype: video")
-                        convert_video(src,hash_code(name)+'.mp4')
-                        # time.sleep(5)
-                        os.remove(src)
-                        newsrc = hash_code(name)+'.mp4'
-                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
-                    else:#不准确
-                        print("filetype:img")
-                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc+ src,group=group)
+                # if address == '.pdf' or address == '.PDF': #切片操作
+                #     with open(src, 'wb')as f:
+                #         for ffile in file_obj.chunks():
+                #             f.write(ffile)
+                #     inputpdf = PdfFileReader(open(src, "rb"))
+                #     output = PdfFileWriter()
+                #     print("1")
+                #     for i in range(inputpdf.numPages):
+                #         output.addPage(inputpdf.getPage(i))
+                #         # output.encrypt(user_pwd="wyd",owner_pwd="None",use_128bit=True,allow_printing=False, allow_commenting=False,overwrite_permission=False)
+                #         pagesrc = src+"-page%s.pdf" % (i+1)
+                #         print(pagesrc)
+                #         with open(pagesrc, "wb") as outputStream: #页码
+                #             output.write(outputStream)
+                #     File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
+                #
+                with open(src, 'wb')as f:
+                    for ffile in file_obj.chunks():
+                        f.write(ffile)
+                if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
+                    print("filetype: video")
+                    convert_video(src,hash_code(name)+'.mp4')
+                    # time.sleep(5)
+                    os.remove(src)
+                    newsrc = hash_code(name)+'.mp4'
+                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
+                else:#不准确
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc+ src,group=group)
 
                 lastFile = File.objects.order_by("-createDate")[0:1].get()
                 id = lastFile.id
                 print(id)
                 Data = {"title": title, "id": str(id), "type":type}
             else:
-                if address == '.pdf': #切片操作
-                    inputpdf = PdfFileReader(open(src, "wb"))
-                    for i in range(inputpdf.numPages):
-                        output = PdfFileWriter()
-                        output.addPage(inputpdf.getPage(i))
-                        with open(src+"-page%s.pdf" % i, "wb") as outputStream: #页码
-                            output.write(outputStream)
-                    File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=filesrc+src,group=group)
+                # if address == '.pdf': #切片操作
+                #     inputpdf = PdfFileReader(open(src, "wb"))
+                #     for i in range(inputpdf.numPages):
+                #         output = PdfFileWriter()
+                #         output.addPage(inputpdf.getPage(i))
+                #         with open(src+"-page%s.pdf" % i, "wb") as outputStream: #页码
+                #             output.write(outputStream)
+                #     File.objects.filter(id=id).update(filename=title, type=type, content=content,createDate=datetime.datetime.now(),src=filesrc+src,group=group)
+                # else:
+                with open(src, 'wb')as f:
+                    for ffile in file_obj.chunks():
+                        f.write(ffile)
+                if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
+                    convert_video(src,hash_code(name)+'.mp4')
+                    # time.sleep(5)
+                    os.remove(src)
+                    newsrc = hash_code(name)+'.mp4'
+                    File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
+                if address == '.jpg' or address == '.JPG' or address == '.png' or address == '.PNG' or address == '.gif' or address == '.GIF':#不准确
+                    print("filetype:img")
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
                 else:
-                    with open(src, 'wb')as f:
-                        for ffile in file_obj.chunks():
-                            f.write(ffile)
-                    if address == '.avi' or address =='.AVI'or address =='.asf'or address =='.ASF' or address =='.wav'or address =='.WAV' or address =='.flv'or address =='.FLV' or address =='.siff'or address =='.SIFF':
-                        convert_video(src,hash_code(name)+'.mp4')
-                        # time.sleep(5)
-                        os.remove(src)
-                        newsrc = hash_code(name)+'.mp4'
-                        File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
-                    if address == '.jpg' or address == '.JPG' or address == '.png' or address == '.PNG' or address == '.gif' or address == '.GIF':#不准确
-                        print("filetype:img")
-                        File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc + src,group=group)
-                    else:
-                        print("error")
-                        success = False
+                    print("error")
+                    success = False
                 Data = {"title": title, "id": str(id), "type": type}
         except Exception as e:
             success = False
@@ -842,8 +820,13 @@ def getFile(request):
                     list = src.split("/")
                     totalPage = PdfFileReader(open(list[3], "rb")).numPages
                     timepage = int(math.ceil(float(limit)*totalPage))
-                    page = '-page' + str(timepage) + '.pdf'
-                    src = src + page
+                    inputpdf = PdfFileReader(open(list[3], "rb"))
+                    output = PdfFileWriter()
+                    output.addPage(inputpdf.getPage(timepage-1))
+                    pagesrc = src+"-page%s.pdf" % (timepage)
+                    with open(pagesrc, "wb") as outputStream: #页码
+                        output.write(outputStream)
+                    src = pagesrc
                 try:
                     # if type=="pdf":
                     #     Fileinfo = File_User.objects.filter(filename_id=id)
