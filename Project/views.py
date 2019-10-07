@@ -18,8 +18,6 @@ from wand.color import Color
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import math
 import glob
-from win32com.client import gencache
-from win32com.client import constants, gencache
 import io
 # Create your views here.
 filesrc = r"http://lvmaozi.info:9999/"
