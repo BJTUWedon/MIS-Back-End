@@ -816,7 +816,7 @@ def getFile(request):
                 if limit is None and timeLimit is None:
                     limit = File_User.objects.get(filename_id=id, username_id=userid).time
                     timeLimit = File_User.objects.get(filename_id=id, username_id=userid).timeLimit
-                if type == "pdf":
+                if type == "pdf" and type == "PDF":
                     list = src.split("/")
                     totalPage = PdfFileReader(open(list[3], "rb")).numPages
                     timepage = int(math.ceil(float(limit)*totalPage))
@@ -826,6 +826,7 @@ def getFile(request):
                     pagesrc = src+"-page%s.pdf" % (timepage)
                     with open(pagesrc, "wb") as outputStream: #页码
                         output.write(outputStream)
+                        print("生成成功")
                     src = pagesrc
                 try:
                     # if type=="pdf":
