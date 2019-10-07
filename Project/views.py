@@ -825,7 +825,8 @@ def getFile(request):
                     output.addPage(inputpdf.getPage(timepage-1))
                     pagesrc = src+"-page%s.pdf" % (timepage)
                     print(pagesrc)
-                    with open(pagesrc, "wb") as outputStream: #页码
+                    list = pagesrc.split("/")
+                    with open(list[3], "wb") as outputStream: #页码
                         output.write(outputStream)
                         print("生成成功")
                     src = pagesrc
