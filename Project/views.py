@@ -822,7 +822,8 @@ def getFile(request):
                     timepage = int(math.ceil(float(limit)*totalPage))
                     inputpdf = PdfFileReader(open(list[3], "rb"))
                     output = PdfFileWriter()
-                    output.addPage(inputpdf.getPage(timepage-1))
+                    for i in range(timepage):
+                        output.addPage(inputpdf.getPage(i))
                     pagesrc = src+"-page%s.pdf" % (timepage)
                     print(pagesrc)
                     list = pagesrc.split("/")
