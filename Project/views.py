@@ -824,6 +824,7 @@ def getFile(request):
                     output = PdfFileWriter()
                     output.addPage(inputpdf.getPage(timepage-1))
                     pagesrc = src+"-page%s.pdf" % (timepage)
+                    print(pagesrc)
                     with open(pagesrc, "wb") as outputStream: #页码
                         output.write(outputStream)
                         print("生成成功")
