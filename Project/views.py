@@ -825,8 +825,7 @@ def getFile(request):
                     output.addPage(inputpdf.getPage(timepage-1))
                     pagesrc = src+"-page%s.pdf" % (timepage)
                     with open(pagesrc, "wb") as outputStream: #页码
-                        if outputStream is not None:
-                            output.write(outputStream)
+                        output.write(outputStream)
                     src = pagesrc
                 try:
                     # if type=="pdf":
