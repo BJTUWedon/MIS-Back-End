@@ -52,6 +52,14 @@ def convert_video(video_input, video_output):
             # print unknown_line
             pass
 
+def convert_word(input):
+    end_length = len(input.split('.')[-1]) + 1
+    name = input[0:-end_length]
+    cmd = 'libreoffice  --convert-to pdf  %s' % input
+    os.system(cmd)
+    name = name.split('/')[-1] + '.pdf'
+    return name
+
 def login(request):
     if request.method =="POST":
         try:
@@ -614,15 +622,10 @@ def uploadFile(request):
                     newsrc = hash_code(name)+'.mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
                 elif address == '.docx' or address =='.doc':
-                    word = gencache.EnsureDispatch('Word.Application')
-                    doc = word.Documents.Open(src, ReadOnly=1)
-                    doc.ExportAsFixedFormat(src+'.pdf',
-                                            constants.wdExportFormatPDF,
-                                            Item=constants.wdExportDocumentWithMarkup,
-                                            CreateBookmarks=constants.wdExportCreateHeadingBookmarks)
-                    word.Quit(constants.wdDoNotSaveChanges)
+                    newsrc = convert_word(src)
+                    os.remove(src)
                     File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),
-                                        src=filesrc + src+'.pdf', group=group)
+                                        src=filesrc + newsrc, group=group)
                 else:#不准确
                     File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc+ src,group=group)
 
