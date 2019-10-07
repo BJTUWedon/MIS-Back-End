@@ -18,6 +18,8 @@ from wand.color import Color
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import math
 import glob
+from win32com.client import gencache
+from win32com.client import constants, gencache
 import io
 # Create your views here.
 filesrc = r"http://lvmaozi.info:9999/"
@@ -611,6 +613,16 @@ def uploadFile(request):
                     os.remove(src)
                     newsrc = hash_code(name)+'.mp4'
                     File.objects.create(filename=title, type=type, content=content,createDate=datetime.datetime.now(), src=filesrc+newsrc,group=group)#我认为下面还要返回id
+                elif address == '.docx' or address =='.doc':
+                    word = gencache.EnsureDispatch('Word.Application')
+                    doc = word.Documents.Open(src, ReadOnly=1)
+                    doc.ExportAsFixedFormat(src+'.pdf',
+                                            constants.wdExportFormatPDF,
+                                            Item=constants.wdExportDocumentWithMarkup,
+                                            CreateBookmarks=constants.wdExportCreateHeadingBookmarks)
+                    word.Quit(constants.wdDoNotSaveChanges)
+                    File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),
+                                        src=filesrc + src+'.pdf', group=group)
                 else:#不准确
                     File.objects.create(filename=title, type=type, content=content, createDate=datetime.datetime.now(),src=filesrc+ src,group=group)
 
@@ -816,7 +828,7 @@ def getFile(request):
                 if limit is None and timeLimit is None:
                     limit = File_User.objects.get(filename_id=id, username_id=userid).time
                     timeLimit = File_User.objects.get(filename_id=id, username_id=userid).timeLimit
-                if type == "pdf" or type == "PDF":
+                if type == "pdf" or type == "PDF" or type == "DOCX" or type == "docx" or type == "DOC" or type == "doc":
                     list = src.split("/")
                     totalPage = PdfFileReader(open(list[3], "rb")).numPages
                     timepage = int(math.ceil(float(limit)*totalPage))
