@@ -448,15 +448,10 @@ def getUserList(request):
             else:
                 pass
         except Exception as e:
-            success = False
+            # success = False #测试
+            success = True
             Data = str(e)
-        # response = HttpResponse("{'success': success, 'data': Data}",content_type="application/json")
         return JsonResponse({"success": success, "data": Data})
-        # response = HttpResponse()
-        # response['Age']=120
-        # del response['Age']
-        # response = HttpResponse(({"success": success, "data": Data}), content_type="application/json")
-        # return response
 
 def getFileList(request):
     if request.method == "GET":
@@ -516,10 +511,12 @@ def getFileList(request):
                     else:
                         pass
                 except Exception as e:
-                    success = False
+                    # success = False
+                    success = True
                     Data = str(e)
         except Exception as e:
-            success = False
+            # success = False
+            success = True
             Data = str(e)
         # response_data = {}
         # response_data['success'] = success
